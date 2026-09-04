@@ -1,12 +1,29 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+
 <meta name="theme-color" content="#08080d">
-<title>Asep AI — Ultimate AI Workspace</title><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="color-scheme" content="dark">
+
+<title>Asep AI — Ultimate AI Workspace</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet"><style>
-*{
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap"
+      rel="stylesheet">
+
+<style>
+/* =========================================================
+   RESET
+========================================================= */
+
+*,
+*::before,
+*::after{
     box-sizing:border-box;
     margin:0;
     padding:0;
@@ -15,52 +32,113 @@
 :root{
     --bg:#08080d;
     --bg2:#0d0d14;
+
     --panel:rgba(17,17,25,.78);
     --panel-solid:#12121a;
     --panel-hover:#191923;
+
     --border:rgba(255,255,255,.075);
     --border2:rgba(255,255,255,.12);
+
     --text:#f7f7fb;
     --muted:#858592;
     --muted2:#5d5d69;
+
     --purple:#8b5cf6;
     --blue:#5b7cff;
     --green:#43e29b;
     --danger:#ff647c;
+    --warning:#ffb84d;
+
     --shadow:0 25px 80px rgba(0,0,0,.38);
+
+    --sidebar-width:255px;
+    --topbar-height:70px;
+
+    --ease:cubic-bezier(.2,.8,.2,1);
 }
 
-html,body{
+html{
     width:100%;
     height:100%;
+    background:var(--bg);
 }
 
 body{
-    background:var(--bg);
+    width:100%;
+    min-height:100%;
+    min-height:100dvh;
+
+    background:
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(139,92,246,.055),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 100%,
+            rgba(91,124,255,.045),
+            transparent 30%
+        ),
+        var(--bg);
+
     color:var(--text);
-    font-family:Inter,system-ui,sans-serif;
+
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
     overflow:hidden;
 }
 
-/* =========================
+button,
+input,
+textarea,
+select{
+    font:inherit;
+}
+
+button{
+    -webkit-tap-highlight-color:transparent;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible{
+    outline:2px solid rgba(139,92,246,.65);
+    outline-offset:2px;
+}
+
+/* =========================================================
    BACKGROUND
-========================= */
+========================================================= */
 
 .background{
     position:fixed;
     inset:0;
-    pointer-events:none;
     overflow:hidden;
+    pointer-events:none;
+    z-index:0;
 }
 
 .glow{
     position:absolute;
+
     width:420px;
     height:420px;
+
     border-radius:50%;
+
     filter:blur(120px);
     opacity:.09;
-    animation:drift 14s ease-in-out infinite alternate;
+
+    animation:
+        drift 14s ease-in-out infinite alternate;
 }
 
 .glow.a{
@@ -73,76 +151,130 @@ body{
     background:#4f7cff;
     right:-180px;
     bottom:-180px;
+
     animation-delay:-5s;
 }
 
 @keyframes drift{
-    from{transform:translate(0,0) scale(1)}
-    to{transform:translate(50px,30px) scale(1.12)}
+    from{
+        transform:translate3d(0,0,0) scale(1);
+    }
+
+    to{
+        transform:translate3d(50px,30px,0) scale(1.12);
+    }
 }
 
-/* =========================
-   LAYOUT
-========================= */
+/* =========================================================
+   APP
+========================================================= */
 
 .app{
     position:relative;
-    height:100vh;
+    z-index:1;
+
+    width:100%;
+    height:100dvh;
+
     display:flex;
 }
 
-/* =========================
+/* =========================================================
    SIDEBAR
-========================= */
+========================================================= */
 
 .sidebar{
-    width:255px;
+    width:var(--sidebar-width);
     height:100%;
+
+    flex:0 0 var(--sidebar-width);
+
     padding:18px;
+
     border-right:1px solid var(--border);
+
     background:rgba(10,10,15,.72);
+
     backdrop-filter:blur(30px);
     -webkit-backdrop-filter:blur(30px);
+
     display:flex;
     flex-direction:column;
-    transition:.35s cubic-bezier(.2,.8,.2,1);
-    z-index:20;
+
+    transition:
+        transform .35s var(--ease),
+        left .35s var(--ease);
+
+    z-index:50;
 }
 
 .brand{
     display:flex;
     align-items:center;
+
     gap:11px;
-    padding:5px 7px 22px;
+
+    padding:
+        5px
+        7px
+        22px;
 }
 
 .brand-logo{
     position:relative;
+
     width:44px;
     height:44px;
+
+    flex:0 0 44px;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     border-radius:14px;
-    background:linear-gradient(145deg,#151520,#0e0e15);
+
+    background:
+        linear-gradient(
+            145deg,
+            #151520,
+            #0e0e15
+        );
+
     border:1px solid var(--border2);
-    box-shadow:0 12px 35px rgba(0,0,0,.25);
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.25);
+}
+
+.hand{
+    font-family:Caveat,cursive;
+    font-weight:700;
+    line-height:1;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #b79cff
+        );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+
+    color:transparent;
 }
 
 .brand-logo .hand{
-    font-family:Caveat,cursive;
     font-size:30px;
-    font-weight:700;
-    line-height:1;
-    background:linear-gradient(135deg,#fff,#b79cff);
-    -webkit-background-clip:text;
-    color:transparent;
 }
 
 .crown{
     position:absolute;
+
     top:1px;
     right:1px;
+
     font-size:10px;
     color:#a98cff;
 }
@@ -158,27 +290,51 @@ body{
 
 .brand-text span{
     display:block;
+
     margin-top:4px;
+
     color:var(--muted);
+
     font-size:10px;
 }
 
 .new-chat{
     width:100%;
     height:46px;
+
     border:0;
     border-radius:14px;
+
     color:white;
+
     font-weight:600;
-    background:linear-gradient(135deg,#8255ed,#556ff5);
-    box-shadow:0 10px 30px rgba(105,83,240,.18);
+
+    background:
+        linear-gradient(
+            135deg,
+            #8255ed,
+            #556ff5
+        );
+
+    box-shadow:
+        0 10px 30px rgba(105,83,240,.18);
+
     cursor:pointer;
-    transition:.25s;
+
+    transition:
+        transform .25s var(--ease),
+        box-shadow .25s var(--ease);
 }
 
 .new-chat:hover{
     transform:translateY(-2px);
-    box-shadow:0 14px 35px rgba(105,83,240,.28);
+
+    box-shadow:
+        0 14px 35px rgba(105,83,240,.28);
+}
+
+.new-chat:active{
+    transform:translateY(0) scale(.98);
 }
 
 .nav{
@@ -186,40 +342,67 @@ body{
 }
 
 .nav-title{
-    padding:0 9px 9px;
+    padding:
+        0
+        9px
+        9px;
+
     color:var(--muted2);
+
     font-size:10px;
     font-weight:700;
+
     text-transform:uppercase;
     letter-spacing:1px;
 }
 
 .nav button{
     width:100%;
+
     display:flex;
     align-items:center;
+
     gap:12px;
-    padding:11px 12px;
+
+    padding:
+        11px
+        12px;
+
     margin-bottom:4px;
+
     border:0;
     border-radius:11px;
+
     background:transparent;
+
     color:#aaaab5;
+
     font-size:13px;
     text-align:left;
+
     cursor:pointer;
-    transition:.2s;
+
+    transition:
+        background .2s ease,
+        color .2s ease,
+        transform .2s ease;
 }
 
-.nav button:hover,
-.nav button.active{
+.nav button:hover{
     background:rgba(255,255,255,.055);
+    color:white;
+}
+
+.nav button.active{
+    background:rgba(255,255,255,.07);
     color:white;
 }
 
 .nav-icon{
     width:20px;
+
     text-align:center;
+
     font-size:15px;
 }
 
@@ -229,15 +412,18 @@ body{
 
 .credit-card{
     padding:15px;
+
     border:1px solid var(--border);
     border-radius:16px;
+
     background:rgba(255,255,255,.025);
 }
 
 .credit-top{
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
+
     margin-bottom:11px;
 }
 
@@ -247,83 +433,151 @@ body{
 }
 
 .credit-number{
+    color:white !important;
+
     font-weight:800;
     font-size:17px;
 }
 
 .credit-bar{
     height:4px;
+
     background:#25252e;
+
     border-radius:99px;
+
     overflow:hidden;
 }
 
 .credit-fill{
     width:100%;
     height:100%;
-    background:linear-gradient(90deg,#8b5cf6,#5b7cff);
+
+    background:
+        linear-gradient(
+            90deg,
+            #8b5cf6,
+            #5b7cff
+        );
+
     border-radius:inherit;
-    transition:.4s;
+
+    transition:
+        width .4s var(--ease);
 }
 
 .topup-btn{
     width:100%;
+
     margin-top:11px;
+
     height:34px;
+
     border-radius:10px;
+
     border:1px solid var(--border2);
+
     background:rgba(255,255,255,.04);
+
     color:#dddde5;
+
     font-size:11px;
+
     cursor:pointer;
+
+    transition:
+        background .2s ease;
 }
 
-/* =========================
+.topup-btn:hover{
+    background:rgba(255,255,255,.075);
+}
+
+/* =========================================================
    MAIN
-========================= */
+========================================================= */
 
 .main{
     min-width:0;
+    min-height:0;
+
     flex:1;
+
     display:flex;
     flex-direction:column;
 }
 
+/* =========================================================
+   TOPBAR
+========================================================= */
+
 .topbar{
-    height:70px;
-    padding:0 25px;
+    height:var(--topbar-height);
+
+    flex:0 0 var(--topbar-height);
+
+    padding:
+        0
+        25px;
+
     display:flex;
     align-items:center;
     justify-content:space-between;
+
     border-bottom:1px solid var(--border);
+
     background:rgba(8,8,13,.48);
+
     backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+
     z-index:10;
 }
 
 .mode{
+    min-width:0;
+
     display:flex;
     align-items:center;
+
     gap:9px;
 }
 
 .mode-dot{
     width:8px;
     height:8px;
+
+    flex:0 0 8px;
+
     border-radius:50%;
+
     background:var(--green);
-    box-shadow:0 0 12px rgba(67,226,155,.7);
+
+    box-shadow:
+        0 0 12px rgba(67,226,155,.7);
 }
 
 .mode-name{
+    max-width:220px;
+
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+
     font-size:13px;
     font-weight:600;
 }
 
 .mode-sub{
     color:var(--muted);
+
     font-size:11px;
+
     margin-left:3px;
+
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
 }
 
 .top-actions{
@@ -331,31 +585,62 @@ body{
     gap:7px;
 }
 
-.icon-btn{
+.icon-btn,
+.mobile-menu{
     width:36px;
     height:36px;
+
+    flex:0 0 36px;
+
     border-radius:11px;
+
     border:1px solid var(--border);
+
     background:rgba(255,255,255,.035);
+
     color:#bbb;
+
     cursor:pointer;
-    transition:.2s;
+
+    transition:
+        color .2s ease,
+        background .2s ease,
+        transform .2s ease;
 }
 
-.icon-btn:hover{
+.icon-btn:hover,
+.mobile-menu:hover{
     color:white;
     background:rgba(255,255,255,.07);
 }
 
-/* =========================
+.icon-btn:active,
+.mobile-menu:active{
+    transform:scale(.94);
+}
+
+/* =========================================================
    CHAT
-========================= */
+========================================================= */
 
 .chat{
     flex:1;
+    min-height:0;
+
     overflow-y:auto;
-    padding:20px 20px 170px;
+    overflow-x:hidden;
+
+    padding:
+        20px
+        20px
+        180px;
+
     scroll-behavior:smooth;
+
+    overscroll-behavior:contain;
+
+    scrollbar-width:thin;
+    scrollbar-color:#272731 transparent;
 }
 
 .chat::-webkit-scrollbar{
@@ -369,103 +654,168 @@ body{
 
 .chat-inner{
     width:min(850px,100%);
-    margin:auto;
+
+    margin:0 auto;
 }
 
-/* =========================
+/* =========================================================
    WELCOME
-========================= */
+========================================================= */
 
 .welcome{
-    min-height:calc(100vh - 260px);
+    min-height:
+        calc(
+            100dvh
+            - var(--topbar-height)
+            - 150px
+        );
+
     display:flex;
     flex-direction:column;
+
     align-items:center;
     justify-content:center;
+
     text-align:center;
+
     animation:fadeUp .6s ease;
 }
 
 .welcome-logo{
     width:74px;
     height:74px;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     position:relative;
+
     border-radius:24px;
-    background:linear-gradient(145deg,#17151f,#0f0f16);
+
+    background:
+        linear-gradient(
+            145deg,
+            #17151f,
+            #0f0f16
+        );
+
     border:1px solid rgba(151,119,255,.2);
+
     box-shadow:
         0 20px 60px rgba(93,62,190,.15),
         inset 0 1px rgba(255,255,255,.08);
 }
 
 .welcome-logo .hand{
-    font-family:Caveat,cursive;
     font-size:47px;
-    font-weight:700;
-    background:linear-gradient(135deg,#fff,#aa8cff);
-    -webkit-background-clip:text;
-    color:transparent;
 }
 
 .welcome-crown{
     position:absolute;
+
     right:11px;
     top:7px;
+
     color:#a687ff;
     font-size:13px;
 }
 
 .welcome h1{
     margin-top:22px;
-    font-size:clamp(30px,5vw,47px);
+
+    font-size:
+        clamp(
+            30px,
+            5vw,
+            47px
+        );
+
     letter-spacing:-2px;
 }
 
 .gradient-text{
-    background:linear-gradient(100deg,#fff,#a78bfa,#7194ff);
+    background:
+        linear-gradient(
+            100deg,
+            #fff,
+            #a78bfa,
+            #7194ff
+        );
+
     -webkit-background-clip:text;
+    background-clip:text;
+
     color:transparent;
 }
 
 .welcome p{
     max-width:520px;
+
     margin-top:10px;
+
     color:var(--muted);
+
     line-height:1.7;
+
     font-size:13px;
 }
 
 .quick-grid{
     width:min(700px,100%);
+
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+
+    grid-template-columns:
+        repeat(4,1fr);
+
     gap:8px;
+
     margin-top:30px;
 }
 
 .quick{
-    padding:13px 9px;
+    padding:
+        13px
+        9px;
+
     border:1px solid var(--border);
     border-radius:13px;
+
     background:rgba(255,255,255,.025);
+
     color:#aaaab4;
+
     cursor:pointer;
-    transition:.25s;
+
+    transition:
+        transform .25s var(--ease),
+        border-color .25s ease,
+        background .25s ease,
+        color .25s ease;
 }
 
 .quick:hover{
     transform:translateY(-2px);
-    border-color:rgba(139,92,246,.25);
-    background:rgba(139,92,246,.055);
+
+    border-color:
+        rgba(139,92,246,.25);
+
+    background:
+        rgba(139,92,246,.055);
+
     color:white;
+}
+
+.quick:active{
+    transform:translateY(0) scale(.98);
 }
 
 .quick b{
     display:block;
+
     margin-bottom:4px;
+
     font-size:11px;
 }
 
@@ -473,42 +823,58 @@ body{
     font-size:9px;
 }
 
-/* =========================
+/* =========================================================
    MESSAGES
-========================= */
+========================================================= */
 
 .message{
     display:flex;
+
     gap:13px;
+
     margin:25px 0;
-    animation:fadeUp .3s ease;
+
+    animation:
+        fadeUp .3s ease;
 }
 
 @keyframes fadeUp{
     from{
         opacity:0;
-        transform:translateY(8px);
+        transform:translate3d(0,8px,0);
     }
+
     to{
         opacity:1;
-        transform:translateY(0);
+        transform:none;
     }
 }
 
 .avatar{
     width:34px;
     height:34px;
+
     min-width:34px;
+
     border-radius:11px;
+
     display:grid;
     place-items:center;
+
     font-size:12px;
     font-weight:700;
 }
 
 .ai .avatar{
-    background:linear-gradient(135deg,#8255ed,#556ff5);
-    box-shadow:0 5px 20px rgba(103,77,229,.2);
+    background:
+        linear-gradient(
+            135deg,
+            #8255ed,
+            #556ff5
+        );
+
+    box-shadow:
+        0 5px 20px rgba(103,77,229,.2);
 }
 
 .user .avatar{
@@ -522,27 +888,45 @@ body{
 
 .msg-name{
     color:var(--muted);
+
     font-size:10px;
+
     margin-bottom:5px;
+
     font-weight:600;
 }
 
 .msg-text{
+    min-width:0;
+
     font-size:14px;
+
     line-height:1.75;
+
     color:#e8e8ee;
+
     white-space:pre-wrap;
-    word-break:break-word;
+
+    overflow-wrap:anywhere;
 }
 
 .copy-message{
     margin-top:8px;
-    padding:5px 8px;
+
+    padding:
+        5px
+        8px;
+
     border-radius:7px;
+
     border:1px solid var(--border);
+
     background:transparent;
+
     color:var(--muted);
+
     font-size:10px;
+
     cursor:pointer;
 }
 
@@ -550,40 +934,61 @@ body{
     color:white;
 }
 
-/* =========================
+/* =========================================================
    CODE
-========================= */
+========================================================= */
 
 .code-wrap{
-    margin-top:10px;
+    width:100%;
+
+    margin:
+        10px
+        0;
+
     border:1px solid var(--border2);
+
     border-radius:13px;
+
     overflow:hidden;
+
     background:#0b0b10;
 }
 
 .code-head{
-    height:34px;
-    padding:0 10px;
+    min-height:34px;
+
+    padding:
+        0
+        10px;
+
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
+
     background:#111119;
+
     border-bottom:1px solid var(--border);
 }
 
 .code-lang{
     color:#777783;
+
     font-size:9px;
+
     text-transform:uppercase;
+
     letter-spacing:.7px;
 }
 
 .copy-code{
     border:0;
+
     background:transparent;
+
     color:#888894;
+
     font-size:10px;
+
     cursor:pointer;
 }
 
@@ -592,46 +997,127 @@ body{
 }
 
 .code{
+    margin:0;
+
     padding:13px;
+
     overflow-x:auto;
+
     color:#dddde6;
-    font-family:"SFMono-Regular",Consolas,monospace;
+
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        "Liberation Mono",
+        monospace;
+
     font-size:11px;
+
     line-height:1.7;
+
     white-space:pre;
 }
 
-/* =========================
+/* =========================================================
+   LOADING
+========================================================= */
+
+.typing{
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:5px;
+
+    min-height:24px;
+}
+
+.typing span{
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+
+    background:#888;
+
+    animation:
+        typingBounce 1.2s infinite ease-in-out;
+}
+
+.typing span:nth-child(2){
+    animation-delay:.15s;
+}
+
+.typing span:nth-child(3){
+    animation-delay:.3s;
+}
+
+@keyframes typingBounce{
+    0%,60%,100%{
+        transform:translateY(0);
+        opacity:.35;
+    }
+
+    30%{
+        transform:translateY(-4px);
+        opacity:1;
+    }
+}
+
+/* =========================================================
    COMPOSER
-========================= */
+========================================================= */
 
 .composer-area{
     position:fixed;
-    left:255px;
+
+    left:var(--sidebar-width);
     right:0;
     bottom:0;
-    padding:18px 20px 20px;
-    background:linear-gradient(
-        transparent,
-        rgba(8,8,13,.95) 35%
-    );
+
+    padding:
+        18px
+        20px
+        calc(20px + env(safe-area-inset-bottom));
+
+    background:
+        linear-gradient(
+            transparent,
+            rgba(8,8,13,.95) 35%
+        );
+
     z-index:15;
+
+    pointer-events:none;
 }
 
 .composer{
     width:min(850px,100%);
+
     margin:auto;
+
     border:1px solid var(--border2);
+
     border-radius:19px;
+
     background:rgba(17,17,24,.9);
+
     box-shadow:var(--shadow);
+
     backdrop-filter:blur(25px);
     -webkit-backdrop-filter:blur(25px);
-    transition:.25s;
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease;
+
+    pointer-events:auto;
 }
 
 .composer:focus-within{
-    border-color:rgba(139,92,246,.3);
+    border-color:
+        rgba(139,92,246,.3);
+
     box-shadow:
         0 25px 80px rgba(0,0,0,.45),
         0 0 0 3px rgba(139,92,246,.045);
@@ -640,18 +1126,34 @@ body{
 .composer-top{
     display:flex;
     align-items:center;
+
     gap:7px;
-    padding:8px 10px 0;
+
+    padding:
+        8px
+        10px
+        0;
 }
 
 .mode-select{
     border:1px solid var(--border);
+
     border-radius:9px;
-    padding:7px 9px;
-    background:rgba(255,255,255,.035);
+
+    padding:
+        7px
+        9px;
+
+    background:
+        rgba(255,255,255,.035);
+
     color:#bbb;
+
     outline:none;
+
     font-size:10px;
+
+    cursor:pointer;
 }
 
 .mode-select option{
@@ -660,16 +1162,31 @@ body{
 
 textarea{
     display:block;
+
     width:100%;
+
     min-height:48px;
     max-height:150px;
+
     resize:none;
-    padding:12px 13px;
+
+    padding:
+        12px
+        13px;
+
     border:0;
     outline:0;
+
     background:transparent;
+
     color:white;
-    font:13px Inter,sans-serif;
+
+    font:
+        13px
+        Inter,
+        sans-serif;
+
+    overflow-y:auto;
 }
 
 textarea::placeholder{
@@ -677,31 +1194,61 @@ textarea::placeholder{
 }
 
 .composer-bottom{
-    height:48px;
-    padding:0 9px 9px;
+    min-height:48px;
+
+    padding:
+        0
+        9px
+        9px;
+
     display:flex;
     align-items:center;
     justify-content:space-between;
+
+    gap:10px;
 }
 
 .hint{
     color:#555560;
+
     font-size:9px;
+
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
 }
 
 .send{
     width:35px;
     height:35px;
+
+    flex:0 0 35px;
+
     border:0;
     border-radius:11px;
-    background:linear-gradient(135deg,#8255ed,#556ff5);
+
+    background:
+        linear-gradient(
+            135deg,
+            #8255ed,
+            #556ff5
+        );
+
     color:white;
+
     cursor:pointer;
-    transition:.2s;
+
+    transition:
+        transform .2s ease,
+        opacity .2s ease;
 }
 
-.send:hover{
+.send:hover:not(:disabled){
     transform:scale(1.04);
+}
+
+.send:active:not(:disabled){
+    transform:scale(.94);
 }
 
 .send:disabled{
@@ -709,47 +1256,91 @@ textarea::placeholder{
     cursor:not-allowed;
 }
 
-/* =========================
+.send.loading{
+    animation:
+        pulseSend 1.2s infinite ease-in-out;
+}
+
+@keyframes pulseSend{
+    50%{
+        opacity:.65;
+    }
+}
+
+/* =========================================================
    MODALS
-========================= */
+========================================================= */
 
 .overlay{
     position:fixed;
+
     inset:0;
+
     display:none;
+
     align-items:center;
     justify-content:center;
+
     padding:18px;
+
     background:rgba(0,0,0,.68);
+
     backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+
     z-index:100;
 }
 
 .overlay.show{
     display:flex;
-    animation:fade .2s ease;
+
+    animation:
+        fade .2s ease;
 }
 
 @keyframes fade{
-    from{opacity:0}
-    to{opacity:1}
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
 }
 
 .modal{
     width:min(450px,100%);
+
+    max-height:
+        calc(
+            100dvh - 36px
+        );
+
+    overflow:auto;
+
     border:1px solid var(--border2);
+
     border-radius:22px;
+
     background:#13131b;
-    box-shadow:0 30px 100px rgba(0,0,0,.65);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.65);
+
     padding:22px;
-    animation:modalIn .25s ease;
+
+    animation:
+        modalIn .25s var(--ease);
 }
 
 @keyframes modalIn{
     from{
         opacity:0;
-        transform:translateY(12px) scale(.98);
+        transform:
+            translate3d(0,12px,0)
+            scale(.98);
     }
+
     to{
         opacity:1;
         transform:none;
@@ -760,6 +1351,9 @@ textarea::placeholder{
     display:flex;
     justify-content:space-between;
     align-items:flex-start;
+
+    gap:15px;
+
     margin-bottom:20px;
 }
 
@@ -769,263 +1363,651 @@ textarea::placeholder{
 
 .modal-head p{
     color:var(--muted);
+
     font-size:11px;
+
     margin-top:5px;
+
     line-height:1.5;
 }
 
 .close{
     width:31px;
     height:31px;
+
+    flex:0 0 31px;
+
     border:1px solid var(--border);
+
     border-radius:10px;
+
     background:rgba(255,255,255,.035);
+
     color:#aaa;
+
     cursor:pointer;
+}
+
+.close:hover{
+    color:white;
+
+    background:
+        rgba(255,255,255,.07);
 }
 
 .input-label{
     display:block;
+
     color:#aaaab4;
+
     font-size:10px;
+
     font-weight:600;
+
     margin-bottom:7px;
 }
 
 .input-row{
     display:flex;
+
     gap:7px;
 }
 
 .input{
     min-width:0;
+
     flex:1;
+
     height:42px;
-    padding:0 12px;
+
+    padding:
+        0
+        12px;
+
     border:1px solid var(--border2);
+
     border-radius:11px;
+
     outline:none;
+
     background:#0c0c11;
+
     color:white;
+
     font-size:12px;
 }
 
 .input:focus{
-    border-color:rgba(139,92,246,.5);
+    border-color:
+        rgba(139,92,246,.5);
 }
 
 .small-btn{
     height:42px;
-    padding:0 12px;
+
+    padding:
+        0
+        12px;
+
     border-radius:11px;
+
     border:1px solid var(--border);
-    background:rgba(255,255,255,.05);
+
+    background:
+        rgba(255,255,255,.05);
+
     color:#ccc;
+
     cursor:pointer;
+
     font-size:11px;
+
+    white-space:nowrap;
+}
+
+.small-btn:hover{
+    background:
+        rgba(255,255,255,.08);
 }
 
 .primary{
     width:100%;
+
     height:42px;
+
     margin-top:11px;
+
     border:0;
+
     border-radius:11px;
-    background:linear-gradient(135deg,#8255ed,#556ff5);
+
+    background:
+        linear-gradient(
+            135deg,
+            #8255ed,
+            #556ff5
+        );
+
     color:white;
+
     font-weight:700;
+
     cursor:pointer;
+
+    transition:
+        transform .2s ease,
+        opacity .2s ease;
+}
+
+.primary:hover{
+    transform:translateY(-1px);
+}
+
+.primary:active{
+    transform:scale(.98);
 }
 
 .modal-note{
     margin-top:12px;
+
     color:#64646f;
+
     font-size:9px;
+
     line-height:1.6;
 }
 
-/* =========================
+/* =========================================================
+   HISTORY
+========================================================= */
+
+.history-list{
+    display:flex;
+    flex-direction:column;
+
+    gap:7px;
+
+    max-height:400px;
+
+    overflow:auto;
+}
+
+.history-item{
+    width:100%;
+
+    padding:12px;
+
+    text-align:left;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    color:#ddd;
+
+    cursor:pointer;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease;
+}
+
+.history-item:hover{
+    background:
+        rgba(255,255,255,.055);
+
+    border-color:
+        rgba(139,92,246,.25);
+}
+
+.history-title{
+    display:block;
+
+    overflow:hidden;
+
+    white-space:nowrap;
+
+    text-overflow:ellipsis;
+
+    font-size:11px;
+
+    font-weight:600;
+}
+
+.history-date{
+    display:block;
+
+    margin-top:5px;
+
+    color:var(--muted);
+
+    font-size:9px;
+}
+
+/* =========================================================
    TOAST
-========================= */
+========================================================= */
 
 .toast{
     position:fixed;
+
     left:50%;
-    bottom:25px;
-    transform:translate(-50%,20px);
-    padding:10px 14px;
+    bottom:
+        calc(
+            25px
+            + env(safe-area-inset-bottom)
+        );
+
+    max-width:
+        calc(
+            100vw - 30px
+        );
+
+    transform:
+        translate(-50%,20px);
+
+    padding:
+        10px
+        14px;
+
     border:1px solid var(--border2);
+
     border-radius:11px;
+
     background:#17171f;
+
     color:#ddd;
+
     font-size:11px;
+
     opacity:0;
+
     pointer-events:none;
-    transition:.3s;
+
+    transition:
+        opacity .3s ease,
+        transform .3s var(--ease);
+
     z-index:300;
+
+    text-align:center;
 }
 
 .toast.show{
     opacity:1;
-    transform:translate(-50%,0);
+
+    transform:
+        translate(-50%,0);
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* =========================================================
+   MOBILE MENU
+========================================================= */
 
 .mobile-menu{
     display:none;
 }
 
+/* =========================================================
+   MOBILE OVERLAY
+========================================================= */
+
+.sidebar-backdrop{
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.5);
+
+    backdrop-filter:blur(3px);
+    -webkit-backdrop-filter:blur(3px);
+
+    z-index:40;
+}
+
+.sidebar-backdrop.show{
+    display:block;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
 @media(max-width:750px){
 
     .sidebar{
         position:fixed;
-        left:-270px;
+
         top:0;
         bottom:0;
-        box-shadow:30px 0 80px rgba(0,0,0,.5);
+        left:0;
+
+        transform:
+            translateX(-105%);
+
+        box-shadow:
+            30px 0 80px rgba(0,0,0,.5);
     }
 
     .sidebar.open{
-        left:0;
+        transform:
+            translateX(0);
     }
 
     .mobile-menu{
         display:block;
+
         width:35px;
         height:35px;
+
         margin-right:9px;
-        border:1px solid var(--border);
-        border-radius:10px;
-        background:rgba(255,255,255,.035);
-        color:white;
     }
 
     .topbar{
-        padding:0 14px;
+        padding:
+            0
+            14px;
     }
 
-    .composer-area{
-        left:0;
-        padding:12px 12px 14px;
-    }
-
-    .chat{
-        padding-left:13px;
-        padding-right:13px;
-    }
-
-    .quick-grid{
-        grid-template-columns:repeat(2,1fr);
+    .mode-name{
+        max-width:150px;
     }
 
     .mode-sub{
         display:none;
     }
+
+    .top-actions{
+        gap:5px;
+    }
+
+    .composer-area{
+        left:0;
+
+        padding:
+            12px
+            12px
+            calc(
+                12px
+                + env(safe-area-inset-bottom)
+            );
+    }
+
+    .chat{
+        padding:
+            14px
+            13px
+            180px;
+    }
+
+    .quick-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .welcome{
+        min-height:
+            calc(
+                100dvh
+                - 230px
+            );
+    }
+
+    .welcome h1{
+        letter-spacing:-1.5px;
+    }
+
+    .hint{
+        display:none;
+    }
+
+    .composer-bottom{
+        justify-content:flex-end;
+    }
+
+    .message{
+        gap:10px;
+    }
+
+    .avatar{
+        width:31px;
+        height:31px;
+        min-width:31px;
+    }
 }
-</style></head><body><div class="background">
+
+@media(max-width:420px){
+
+    .quick-grid{
+        gap:6px;
+    }
+
+    .quick{
+        padding:
+            11px
+            7px;
+    }
+
+    .welcome p{
+        font-size:12px;
+    }
+
+    .modal{
+        padding:18px;
+        border-radius:19px;
+    }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        scroll-behavior:auto !important;
+
+        animation-duration:.001ms !important;
+        animation-iteration-count:1 !important;
+
+        transition-duration:.001ms !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background" aria-hidden="true">
     <div class="glow a"></div>
     <div class="glow b"></div>
-</div><div class="app"><!-- SIDEBAR --><aside class="sidebar" id="sidebar"><div class="brand">
-    <div class="brand-logo">
-        <span class="hand">A</span>
-        <span class="crown">♛</span>
-    </div>
-
-    <div class="brand-text">
-        <strong>Asep AI</strong>
-        <span>Think · Code · Create</span>
-    </div>
 </div>
 
-<button class="new-chat" onclick="newChat()">
-    ＋ &nbsp; Chat Baru
-</button>
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-<nav class="nav">
+<div class="app">
 
-    <div class="nav-title">Workspace</div>
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
 
-    <button class="active" onclick="selectMode('General',this)">
-        <span class="nav-icon">⌂</span>
-        Beranda
-    </button>
+<aside class="sidebar" id="sidebar">
 
-    <button onclick="selectMode('Ultimate Coding',this)">
-        <span class="nav-icon">⌘</span>
-        Ultimate Coding
-    </button>
+    <div class="brand">
 
-    <button onclick="selectMode('Creative',this)">
-        <span class="nav-icon">✦</span>
-        Creative
-    </button>
-
-    <button onclick="selectMode('Study',this)">
-        <span class="nav-icon">◈</span>
-        Study
-    </button>
-
-    <button onclick="showHistory()">
-        <span class="nav-icon">◷</span>
-        Riwayat
-    </button>
-
-    <button onclick="openSettings()">
-        <span class="nav-icon">⚙</span>
-        Pengaturan
-    </button>
-
-</nav>
-
-<div class="sidebar-bottom">
-
-    <div class="credit-card">
-
-        <div class="credit-top">
-            <span>Credit tersedia</span>
-            <span class="credit-number" id="creditText">1</span>
+        <div class="brand-logo">
+            <span class="hand">A</span>
+            <span class="crown">♛</span>
         </div>
 
-        <div class="credit-bar">
-            <div class="credit-fill" id="creditFill"></div>
+        <div class="brand-text">
+            <strong>Asep AI</strong>
+            <span>Think · Code · Create</span>
         </div>
 
-        <button class="topup-btn" onclick="openTopup()">
-            ♾️ &nbsp; Masukkan Topup Code
+    </div>
+
+    <button
+        class="new-chat"
+        id="newChatBtn"
+        type="button">
+        ＋ &nbsp; Chat Baru
+    </button>
+
+    <nav class="nav" aria-label="Workspace">
+
+        <div class="nav-title">
+            Workspace
+        </div>
+
+        <button
+            class="active"
+            type="button"
+            data-mode="General">
+            <span class="nav-icon">⌂</span>
+            Beranda
         </button>
 
+        <button
+            type="button"
+            data-mode="Ultimate Coding">
+            <span class="nav-icon">⌘</span>
+            Ultimate Coding
+        </button>
+
+        <button
+            type="button"
+            data-mode="Creative">
+            <span class="nav-icon">✦</span>
+            Creative
+        </button>
+
+        <button
+            type="button"
+            data-mode="Study">
+            <span class="nav-icon">◈</span>
+            Study
+        </button>
+
+        <button
+            type="button"
+            data-mode="Debug">
+            <span class="nav-icon">🐞</span>
+            Debug
+        </button>
+
+        <button
+            type="button"
+            id="historyBtn">
+            <span class="nav-icon">◷</span>
+            Riwayat
+        </button>
+
+        <button
+            type="button"
+            id="settingsBtn">
+            <span class="nav-icon">⚙</span>
+            Pengaturan
+        </button>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+        <div class="credit-card">
+
+            <div class="credit-top">
+
+                <span>
+                    Credit tersedia
+                </span>
+
+                <span
+                    class="credit-number"
+                    id="creditText">
+                    1
+                </span>
+
+            </div>
+
+            <div class="credit-bar">
+                <div
+                    class="credit-fill"
+                    id="creditFill">
+                </div>
+            </div>
+
+            <button
+                class="topup-btn"
+                id="topupBtn"
+                type="button">
+                ♾️ &nbsp; Masukkan Topup Code
+            </button>
+
+        </div>
+
     </div>
 
-</div>
+</aside>
 
-</aside><!-- MAIN --><main class="main"><header class="topbar">
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+<header class="topbar">
 
     <div class="mode">
 
-        <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+        <button
+            class="mobile-menu"
+            id="mobileMenu"
+            type="button"
+            aria-label="Buka menu">
+            ☰
+        </button>
 
         <span class="mode-dot"></span>
 
-        <span class="mode-name" id="modeName">
+        <span
+            class="mode-name"
+            id="modeName">
             Asep AI
         </span>
 
-        <span class="mode-sub" id="modeSub">
-            Gemini 3.7 Flash
+        <span
+            class="mode-sub"
+            id="modeSub">
+            Gemini 2.5 Flash
         </span>
 
     </div>
 
     <div class="top-actions">
 
-        <button class="icon-btn" onclick="newChat()" title="Chat baru">
+        <button
+            class="icon-btn"
+            id="topNewChat"
+            type="button"
+            aria-label="Chat baru"
+            title="Chat baru">
             ＋
         </button>
 
-        <button class="icon-btn" onclick="openSettings()" title="Pengaturan">
+        <button
+            class="icon-btn"
+            id="topSettings"
+            type="button"
+            aria-label="Pengaturan"
+            title="Pengaturan">
             ⚙
         </button>
 
@@ -1033,404 +2015,1437 @@ textarea::placeholder{
 
 </header>
 
-<section class="chat" id="chat">
+<section
+    class="chat"
+    id="chat"
+    aria-label="Percakapan">
 
-    <div class="chat-inner" id="messages">
-
-        <section class="welcome" id="welcome">
-
-            <div class="welcome-logo">
-                <span class="hand">A</span>
-                <span class="welcome-crown">♛</span>
-            </div>
-
-            <h1>
-                Welcome to
-                <span class="gradient-text">Asep AI</span>
-            </h1>
-
-            <p>
-                Asisten AI untuk coding, debugging, ide kreatif,
-                belajar, dan berbagai pekerjaan sehari-hari.
-            </p>
-
-            <div class="quick-grid">
-
-                <button class="quick"
-                    onclick="usePrompt('Buatkan landing page HTML modern untuk sebuah aplikasi AI')">
-                    <b>💻 Build</b>
-                    <span>Buat website</span>
-                </button>
-
-                <button class="quick"
-                    onclick="usePrompt('Bantu aku debug kode JavaScript ini dan jelaskan masalahnya')">
-                    <b>🐞 Debug</b>
-                    <span>Temukan bug</span>
-                </button>
-
-                <button class="quick"
-                    onclick="usePrompt('Buatkan ide project coding yang keren dan realistis untuk dipelajari')">
-                    <b>💡 Ide</b>
-                    <span>Project baru</span>
-                </button>
-
-                <button class="quick"
-                    onclick="usePrompt('Jelaskan konsep JavaScript async dan await dengan sederhana')">
-                    <b>📚 Learn</b>
-                    <span>Belajar coding</span>
-                </button>
-
-            </div>
-
-        </section>
-
+    <div
+        class="chat-inner"
+        id="messages">
     </div>
 
 </section>
 
-</main><!-- COMPOSER --><div class="composer-area"><div class="composer">
+</main>
 
-    <div class="composer-top">
+<!-- =====================================================
+     COMPOSER
+===================================================== -->
 
-        <select class="mode-select" id="modeSelect" onchange="changeMode(this.value)">
-            <option>General</option>
-            <option>Ultimate Coding</option>
-            <option>Creative</option>
-            <option>Study</option>
-            <option>Debug</option>
-        </select>
+<div class="composer-area">
 
-    </div>
+    <div class="composer">
 
-    <textarea
-        id="prompt"
-        rows="1"
-        placeholder="Tanyakan sesuatu kepada Asep AI..."
-    ></textarea>
+        <div class="composer-top">
 
-    <div class="composer-bottom">
+            <select
+                class="mode-select"
+                id="modeSelect"
+                aria-label="Pilih mode">
 
-        <span class="hint">
-            Enter untuk kirim · Shift + Enter untuk baris baru
-        </span>
+                <option value="General">
+                    General
+                </option>
 
-        <button class="send" id="sendBtn" onclick="sendMessage()">
-            ↑
-        </button>
+                <option value="Ultimate Coding">
+                    Ultimate Coding
+                </option>
+
+                <option value="Creative">
+                    Creative
+                </option>
+
+                <option value="Study">
+                    Study
+                </option>
+
+                <option value="Debug">
+                    Debug
+                </option>
+
+            </select>
+
+        </div>
+
+        <textarea
+            id="prompt"
+            rows="1"
+            maxlength="20000"
+            placeholder="Tanyakan sesuatu kepada Asep AI..."
+            aria-label="Pesan">
+        </textarea>
+
+        <div class="composer-bottom">
+
+            <span class="hint">
+                Enter untuk kirim · Shift + Enter untuk baris baru
+            </span>
+
+            <button
+                class="send"
+                id="sendBtn"
+                type="button"
+                aria-label="Kirim pesan">
+                ↑
+            </button>
+
+        </div>
 
     </div>
 
 </div>
 
-</div></div><!-- API MODAL --><div class="overlay" id="apiModal"><div class="modal">
+</div>
 
-    <div class="modal-head">
+<!-- =====================================================
+     API MODAL
+===================================================== -->
 
-        <div>
-            <h2>Hubungkan Gemini</h2>
-            <p>
-                Masukkan Gemini API Key untuk mengaktifkan Asep AI.
-            </p>
+<div
+    class="overlay"
+    id="apiModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="apiTitle">
+
+    <div class="modal">
+
+        <div class="modal-head">
+
+            <div>
+
+                <h2 id="apiTitle">
+                    Hubungkan Gemini
+                </h2>
+
+                <p>
+                    Masukkan Gemini API Key untuk mengaktifkan Asep AI.
+                </p>
+
+            </div>
+
+            <button
+                class="close"
+                type="button"
+                data-close="apiModal"
+                aria-label="Tutup">
+                ×
+            </button>
+
         </div>
 
-        <button class="close" onclick="closeModal('apiModal')">×</button>
+        <label
+            class="input-label"
+            for="apiInput">
+            Gemini API Key
+        </label>
+
+        <div class="input-row">
+
+            <input
+                class="input"
+                id="apiInput"
+                type="text"
+                inputmode="text"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+                placeholder="Tempel API key di sini...">
+
+            <button
+                class="small-btn"
+                id="pasteKeyBtn"
+                type="button">
+                Tempel
+            </button>
+
+        </div>
+
+        <button
+            class="primary"
+            id="saveApiBtn"
+            type="button">
+            Simpan & Aktifkan
+        </button>
+
+        <div class="modal-note">
+            API key disimpan di localStorage browser ini.
+            Untuk website publik, gunakan backend agar API key
+            tidak terekspos ke pengguna.
+        </div>
 
     </div>
 
-    <label class="input-label">Gemini API Key</label>
+</div>
 
-    <div class="input-row">
+<!-- =====================================================
+     TOPUP MODAL
+===================================================== -->
 
-        <!--
-            TEXT INPUT sengaja digunakan agar paste keyboard
-            Android/iOS tidak diblokir oleh aplikasi.
-        -->
+<div
+    class="overlay"
+    id="topupModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="topupTitle">
+
+    <div class="modal">
+
+        <div class="modal-head">
+
+            <div>
+
+                <h2 id="topupTitle">
+                    Aktifkan Unlimited
+                </h2>
+
+                <p>
+                    Masukkan kode top-up untuk membuka credit tanpa batas.
+                </p>
+
+            </div>
+
+            <button
+                class="close"
+                type="button"
+                data-close="topupModal"
+                aria-label="Tutup">
+                ×
+            </button>
+
+        </div>
+
+        <label
+            class="input-label"
+            for="topupInput">
+            Topup Code
+        </label>
+
         <input
             class="input"
-            id="apiInput"
+            id="topupInput"
             type="text"
-            inputmode="text"
             autocomplete="off"
-            autocorrect="off"
-            autocapitalize="off"
             spellcheck="false"
-            placeholder="Tempel API key di sini..."
-        >
+            placeholder="Masukkan kode..."
+            style="width:100%">
 
-        <button class="small-btn" onclick="pasteKey()">
-            Tempel
+        <button
+            class="primary"
+            id="activateTopupBtn"
+            type="button">
+            Aktifkan Unlimited
         </button>
 
-    </div>
-
-    <button class="primary" onclick="saveApiKey()">
-        Simpan & Aktifkan
-    </button>
-
-    <div class="modal-note">
-        API key disimpan hanya di browser ini untuk prototype.
-        Untuk website publik, gunakan backend agar key tidak terekspos.
-    </div>
-
-</div>
-
-</div><!-- TOPUP MODAL --><div class="overlay" id="topupModal"><div class="modal">
-
-    <div class="modal-head">
-
-        <div>
-            <h2>Aktifkan Unlimited</h2>
-            <p>
-                Masukkan kode top-up untuk membuka credit tanpa batas.
-            </p>
+        <div class="modal-note">
+            Credit normal: 1 penggunaan.
+            Mode Unlimited menghapus batas credit pada browser ini.
         </div>
 
-        <button class="close" onclick="closeModal('topupModal')">×</button>
-
-    </div>
-
-    <label class="input-label">Topup Code</label>
-
-    <input
-        class="input"
-        id="topupInput"
-        type="text"
-        autocomplete="off"
-        placeholder="Masukkan kode..."
-        style="width:100%"
-    >
-
-    <button class="primary" onclick="activateTopup()">
-        Aktifkan Unlimited
-    </button>
-
-    <div class="modal-note">
-        Credit normal: 1 penggunaan. Mode Unlimited menghapus batas
-        credit pada browser ini.
     </div>
 
 </div>
 
-</div><!-- SETTINGS --><div class="overlay" id="settingsModal"><div class="modal">
+<!-- =====================================================
+     SETTINGS MODAL
+===================================================== -->
 
-    <div class="modal-head">
+<div
+    class="overlay"
+    id="settingsModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="settingsTitle">
 
-        <div>
-            <h2>Pengaturan</h2>
-            <p>
-                Kelola Asep AI di perangkat ini.
-            </p>
+    <div class="modal">
+
+        <div class="modal-head">
+
+            <div>
+
+                <h2 id="settingsTitle">
+                    Pengaturan
+                </h2>
+
+                <p>
+                    Kelola Asep AI di perangkat ini.
+                </p>
+
+            </div>
+
+            <button
+                class="close"
+                type="button"
+                data-close="settingsModal"
+                aria-label="Tutup">
+                ×
+            </button>
+
         </div>
 
-        <button class="close" onclick="closeModal('settingsModal')">×</button>
+        <label
+            class="input-label"
+            for="modelSelect">
+            Model Gemini
+        </label>
+
+        <select
+            class="input"
+            id="modelSelect"
+            style="width:100%">
+
+            <option value="gemini-2.5-flash">
+                Gemini 2.5 Flash
+            </option>
+
+            <option value="gemini-2.5-pro">
+                Gemini 2.5 Pro
+            </option>
+
+        </select>
+
+        <button
+            class="primary"
+            id="saveModelBtn"
+            type="button">
+            Simpan Model
+        </button>
+
+        <button
+            class="primary"
+            id="clearDataBtn"
+            type="button"
+            style="background:linear-gradient(135deg,#a93450,#713044)">
+            Hapus Semua Data Lokal
+        </button>
+
+        <div class="modal-note">
+            Menghapus data akan menghapus API key, credit,
+            mode unlimited, model, dan seluruh riwayat lokal.
+        </div>
 
     </div>
 
-    <label class="input-label">Model</label>
+</div>
 
-    <select
-        class="input"
-        id="modelSelect"
-        style="width:100%"
-        onchange="saveModel()"
-    >
-        <option value="gemini-3.7-flash">Gemini 3.7 Flash</option>
-        <option value="gemini-3.6-flash">Gemini 3.6 Flash</option>
-        <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
-    </select>
+<!-- =====================================================
+     HISTORY MODAL
+===================================================== -->
 
-    <button class="primary" onclick="clearAllData()">
-        Hapus Data Lokal
-    </button>
+<div
+    class="overlay"
+    id="historyModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="historyTitle">
+
+    <div class="modal">
+
+        <div class="modal-head">
+
+            <div>
+
+                <h2 id="historyTitle">
+                    Riwayat Chat
+                </h2>
+
+                <p>
+                    Pilih percakapan yang ingin dibuka.
+                </p>
+
+            </div>
+
+            <button
+                class="close"
+                type="button"
+                data-close="historyModal"
+                aria-label="Tutup">
+                ×
+            </button>
+
+        </div>
+
+        <div
+            class="history-list"
+            id="historyList">
+        </div>
+
+    </div>
 
 </div>
 
-</div><div class="toast" id="toast"></div><script>
+<div
+    class="toast"
+    id="toast"
+    role="status"
+    aria-live="polite">
+</div>
 
-/* =========================================
-   ASEP AI CONFIG
-========================================= */
+<script>
+"use strict";
 
-const TOPUP_CODE = "sepsep";
+/* =========================================================
+   CONFIG
+========================================================= */
 
-let apiKey = localStorage.getItem("ASEP_API_KEY") || "";
+const CONFIG = Object.freeze({
 
-let model =
-    localStorage.getItem("ASEP_MODEL") ||
-    "gemini-3.7-flash";
+    TOPUP_CODE: "sepsep",
 
-let credits =
-    Number(localStorage.getItem("ASEP_CREDITS"));
+    DEFAULT_CREDITS: 1,
 
-let unlimited =
-    localStorage.getItem("ASEP_UNLIMITED") === "true";
+    MAX_HISTORY: 30,
 
-if(!Number.isFinite(credits)){
-    credits = 1;
-    localStorage.setItem("ASEP_CREDITS","1");
-}
+    MAX_MESSAGES_PER_CHAT: 50,
 
-/* =========================================
-   ELEMENTS
-========================================= */
+    REQUEST_TIMEOUT: 60000,
 
-const promptBox = document.getElementById("prompt");
-const messages = document.getElementById("messages");
-const sendBtn = document.getElementById("sendBtn");
-const chat = document.getElementById("chat");
+    DEFAULT_MODEL: "gemini-2.5-flash",
 
-/* =========================================
-   INITIALIZE
-========================================= */
-
-document.getElementById("modelSelect").value = model;
-
-updateCredits();
-
-/* =========================================
-   TEXTAREA
-========================================= */
-
-promptBox.addEventListener("input",()=>{
-    promptBox.style.height="auto";
-    promptBox.style.height =
-        Math.min(promptBox.scrollHeight,150)+"px";
-});
-
-promptBox.addEventListener("keydown",(e)=>{
-
-    if(e.key==="Enter" && !e.shiftKey){
-
-        e.preventDefault();
-        sendMessage();
-
-    }
+    STORAGE_KEYS: Object.freeze({
+        API: "ASEP_API_KEY",
+        MODEL: "ASEP_MODEL",
+        CREDITS: "ASEP_CREDITS",
+        UNLIMITED: "ASEP_UNLIMITED",
+        HISTORY: "ASEP_HISTORY"
+    })
 
 });
 
-/* =========================================
-   API KEY
-========================================= */
 
-function openApiModal(){
+/* =========================================================
+   SAFE STORAGE
+========================================================= */
 
-    document.getElementById("apiModal").classList.add("show");
+const Storage = {
 
-    const input =
-        document.getElementById("apiInput");
+    get(key, fallback = null){
 
-    input.value = apiKey;
+        try{
+            return localStorage.getItem(key) ?? fallback;
+        }catch{
+            return fallback;
+        }
 
-    setTimeout(()=>{
-        input.focus();
-    },150);
-}
+    },
 
-async function pasteKey(){
+    set(key,value){
 
-    const input =
-        document.getElementById("apiInput");
+        try{
+            localStorage.setItem(key,String(value));
+            return true;
+        }catch{
+            return false;
+        }
 
-    try{
+    },
 
-        if(navigator.clipboard &&
-           navigator.clipboard.readText){
+    remove(key){
 
-            const text =
-                await navigator.clipboard.readText();
+        try{
+            localStorage.removeItem(key);
+        }catch{}
 
-            input.value = text.trim();
+    },
 
-            showToast("API key ditempel");
+    getJSON(key,fallback){
 
-        }else{
+        try{
 
-            showToast(
-                "Tekan lama kolom lalu pilih Paste"
+            const value =
+                localStorage.getItem(key);
+
+            if(!value){
+                return fallback;
+            }
+
+            const parsed =
+                JSON.parse(value);
+
+            return parsed ?? fallback;
+
+        }catch{
+            return fallback;
+        }
+
+    },
+
+    setJSON(key,value){
+
+        try{
+
+            localStorage.setItem(
+                key,
+                JSON.stringify(value)
             );
+
+            return true;
+
+        }catch{
+
+            return false;
 
         }
 
-    }catch{
+    }
 
-        /*
-            Browser mobile sering membatasi Clipboard API.
-            Jangan preventDefault pada input agar keyboard
-            Android tetap bisa melakukan paste manual.
-        */
+};
 
-        showToast(
-            "Tekan lama kolom lalu pilih Tempel"
+
+/* =========================================================
+   APPLICATION STATE
+========================================================= */
+
+const state = {
+
+    apiKey:
+        Storage.get(
+            CONFIG.STORAGE_KEYS.API,
+            ""
+        ),
+
+    model:
+        Storage.get(
+            CONFIG.STORAGE_KEYS.MODEL,
+            CONFIG.DEFAULT_MODEL
+        ),
+
+    credits:
+        Number(
+            Storage.get(
+                CONFIG.STORAGE_KEYS.CREDITS,
+                CONFIG.DEFAULT_CREDITS
+            )
+        ),
+
+    unlimited:
+        Storage.get(
+            CONFIG.STORAGE_KEYS.UNLIMITED,
+            "false"
+        ) === "true",
+
+    currentMode:"General",
+
+    conversation:[],
+
+    isGenerating:false,
+
+    abortController:null,
+
+    toastTimer:null
+
+};
+
+
+/* =========================================================
+   NORMALIZE STATE
+========================================================= */
+
+if(
+    !Number.isFinite(state.credits) ||
+    state.credits < 0
+){
+    state.credits =
+        CONFIG.DEFAULT_CREDITS;
+
+    Storage.set(
+        CONFIG.STORAGE_KEYS.CREDITS,
+        state.credits
+    );
+}
+
+const VALID_MODELS = new Set([
+    "gemini-2.5-flash",
+    "gemini-2.5-pro"
+]);
+
+if(!VALID_MODELS.has(state.model)){
+
+    state.model =
+        CONFIG.DEFAULT_MODEL;
+
+    Storage.set(
+        CONFIG.STORAGE_KEYS.MODEL,
+        state.model
+    );
+
+}
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const $ = selector =>
+    document.querySelector(selector);
+
+const $$ = selector =>
+    [...document.querySelectorAll(selector)];
+
+const els = {
+
+    sidebar:$("#sidebar"),
+
+    sidebarBackdrop:
+        $("#sidebarBackdrop"),
+
+    chat:$("#chat"),
+
+    messages:$("#messages"),
+
+    prompt:$("#prompt"),
+
+    sendBtn:$("#sendBtn"),
+
+    creditText:$("#creditText"),
+
+    creditFill:$("#creditFill"),
+
+    modeName:$("#modeName"),
+
+    modeSub:$("#modeSub"),
+
+    modeSelect:$("#modeSelect"),
+
+    apiModal:$("#apiModal"),
+
+    apiInput:$("#apiInput"),
+
+    topupModal:$("#topupModal"),
+
+    topupInput:$("#topupInput"),
+
+    settingsModal:$("#settingsModal"),
+
+    modelSelect:$("#modelSelect"),
+
+    historyModal:$("#historyModal"),
+
+    historyList:$("#historyList"),
+
+    toast:$("#toast")
+
+};
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+function init(){
+
+    els.modelSelect.value =
+        state.model;
+
+    els.modeSelect.value =
+        state.currentMode;
+
+    updateCredits();
+
+    renderWelcome();
+
+    bindEvents();
+
+    updateModeUI();
+
+    if(!state.apiKey){
+
+        setTimeout(
+            () => openModal("apiModal"),
+            500
         );
 
     }
 
 }
 
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+function bindEvents(){
+
+    /* New chat */
+
+    $("#newChatBtn")
+        .addEventListener(
+            "click",
+            newChat
+        );
+
+    $("#topNewChat")
+        .addEventListener(
+            "click",
+            newChat
+        );
+
+
+    /* Settings */
+
+    $("#settingsBtn")
+        .addEventListener(
+            "click",
+            openSettings
+        );
+
+    $("#topSettings")
+        .addEventListener(
+            "click",
+            openSettings
+        );
+
+
+    /* History */
+
+    $("#historyBtn")
+        .addEventListener(
+            "click",
+            showHistory
+        );
+
+
+    /* Topup */
+
+    $("#topupBtn")
+        .addEventListener(
+            "click",
+            openTopup
+        );
+
+
+    /* Mobile */
+
+    $("#mobileMenu")
+        .addEventListener(
+            "click",
+            () => toggleSidebar()
+        );
+
+    els.sidebarBackdrop
+        .addEventListener(
+            "click",
+            () => toggleSidebar(false)
+        );
+
+
+    /* Mode buttons */
+
+    $$(".nav button[data-mode]")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    selectMode(
+                        button.dataset.mode,
+                        button
+                    );
+
+                }
+            );
+
+        });
+
+
+    /* Composer */
+
+    els.modeSelect
+        .addEventListener(
+            "change",
+            event => {
+
+                changeMode(
+                    event.target.value
+                );
+
+            }
+        );
+
+
+    els.prompt
+        .addEventListener(
+            "input",
+            autoResizeTextarea
+        );
+
+
+    els.prompt
+        .addEventListener(
+            "keydown",
+            handlePromptKeydown
+        );
+
+
+    els.sendBtn
+        .addEventListener(
+            "click",
+            sendMessage
+        );
+
+
+    /* API */
+
+    $("#pasteKeyBtn")
+        .addEventListener(
+            "click",
+            pasteKey
+        );
+
+    $("#saveApiBtn")
+        .addEventListener(
+            "click",
+            saveApiKey
+        );
+
+
+    /* Topup */
+
+    $("#activateTopupBtn")
+        .addEventListener(
+            "click",
+            activateTopup
+        );
+
+
+    els.topupInput
+        .addEventListener(
+            "keydown",
+            event => {
+
+                if(event.key === "Enter"){
+
+                    event.preventDefault();
+
+                    activateTopup();
+
+                }
+
+            }
+        );
+
+
+    /* Settings */
+
+    $("#saveModelBtn")
+        .addEventListener(
+            "click",
+            saveModel
+        );
+
+
+    $("#clearDataBtn")
+        .addEventListener(
+            "click",
+            clearAllData
+        );
+
+
+    /* Modal close */
+
+    $$("[data-close]")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    closeModal(
+                        button.dataset.close
+                    );
+
+                }
+            );
+
+        });
+
+
+    /* Backdrop modal */
+
+    $$(".overlay")
+        .forEach(overlay => {
+
+            overlay.addEventListener(
+                "mousedown",
+                event => {
+
+                    if(event.target === overlay){
+
+                        closeModal(
+                            overlay.id
+                        );
+
+                    }
+
+                }
+            );
+
+        });
+
+
+    /* Escape */
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if(event.key === "Escape"){
+
+                const open =
+                    $(".overlay.show");
+
+                if(open){
+
+                    closeModal(
+                        open.id
+                    );
+
+                    return;
+
+                }
+
+                toggleSidebar(false);
+
+            }
+
+        }
+    );
+
+
+    /* Visibility */
+
+    document.addEventListener(
+        "visibilitychange",
+        () => {
+
+            if(
+                !document.hidden &&
+                state.isGenerating
+            ){
+
+                scrollBottom();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   WELCOME
+========================================================= */
+
+function renderWelcome(){
+
+    els.messages.replaceChildren();
+
+    const welcome =
+        document.createElement("section");
+
+    welcome.className = "welcome";
+
+    const logo =
+        document.createElement("div");
+
+    logo.className = "welcome-logo";
+
+    const hand =
+        document.createElement("span");
+
+    hand.className = "hand";
+    hand.textContent = "A";
+
+    const crown =
+        document.createElement("span");
+
+    crown.className = "welcome-crown";
+    crown.textContent = "♛";
+
+    logo.append(
+        hand,
+        crown
+    );
+
+
+    const title =
+        document.createElement("h1");
+
+    title.append(
+        document.createTextNode("Welcome to ")
+    );
+
+    const gradient =
+        document.createElement("span");
+
+    gradient.className = "gradient-text";
+    gradient.textContent = "Asep AI";
+
+    title.appendChild(gradient);
+
+
+    const paragraph =
+        document.createElement("p");
+
+    paragraph.textContent =
+        "Asisten AI untuk coding, debugging, ide kreatif, belajar, dan berbagai pekerjaan sehari-hari.";
+
+
+    const grid =
+        document.createElement("div");
+
+    grid.className = "quick-grid";
+
+
+    const prompts = [
+
+        [
+            "💻 Build",
+            "Buat website",
+            "Buatkan landing page HTML modern untuk sebuah aplikasi AI"
+        ],
+
+        [
+            "🐞 Debug",
+            "Temukan bug",
+            "Bantu aku debug kode JavaScript ini dan jelaskan masalahnya"
+        ],
+
+        [
+            "💡 Ide",
+            "Project baru",
+            "Buatkan ide project coding yang keren dan realistis untuk dipelajari"
+        ],
+
+        [
+            "📚 Learn",
+            "Belajar coding",
+            "Jelaskan konsep JavaScript async dan await dengan sederhana"
+        ]
+
+    ];
+
+
+    prompts.forEach(
+        ([titleText,subText,promptText]) => {
+
+            const button =
+                document.createElement("button");
+
+            button.className = "quick";
+            button.type = "button";
+
+            const bold =
+                document.createElement("b");
+
+            bold.textContent =
+                titleText;
+
+            const span =
+                document.createElement("span");
+
+            span.textContent =
+                subText;
+
+            button.append(
+                bold,
+                span
+            );
+
+            button.addEventListener(
+                "click",
+                () => usePrompt(promptText)
+            );
+
+            grid.appendChild(button);
+
+        }
+    );
+
+
+    welcome.append(
+        logo,
+        title,
+        paragraph,
+        grid
+    );
+
+    els.messages.appendChild(welcome);
+
+}
+
+
+/* =========================================================
+   MODE
+========================================================= */
+
+function changeMode(mode){
+
+    const validModes = [
+        "General",
+        "Ultimate Coding",
+        "Creative",
+        "Study",
+        "Debug"
+    ];
+
+    if(!validModes.includes(mode)){
+        mode = "General";
+    }
+
+    state.currentMode = mode;
+
+    els.modeSelect.value = mode;
+
+    updateModeUI();
+
+}
+
+
+function updateModeUI(){
+
+    const mode =
+        state.currentMode;
+
+    els.modeName.textContent =
+        mode === "General"
+            ? "Asep AI"
+            : mode;
+
+    if(mode === "Ultimate Coding"){
+
+        els.modeSub.textContent =
+            `${formatModelName(state.model)} · Coding`;
+
+        els.prompt.placeholder =
+            "Build, debug, refactor, atau jelaskan kode...";
+
+    }else if(mode === "Creative"){
+
+        els.modeSub.textContent =
+            `${formatModelName(state.model)} · Creative`;
+
+        els.prompt.placeholder =
+            "Buat ide, cerita, prompt, konsep, atau konten...";
+
+    }else if(mode === "Study"){
+
+        els.modeSub.textContent =
+            `${formatModelName(state.model)} · Study`;
+
+        els.prompt.placeholder =
+            "Tanyakan materi yang ingin kamu pelajari...";
+
+    }else if(mode === "Debug"){
+
+        els.modeSub.textContent =
+            `${formatModelName(state.model)} · Debug`;
+
+        els.prompt.placeholder =
+            "Tempel kode dan jelaskan masalahnya...";
+
+    }else{
+
+        els.modeSub.textContent =
+            formatModelName(state.model);
+
+        els.prompt.placeholder =
+            "Tanyakan sesuatu kepada Asep AI...";
+
+    }
+
+}
+
+
+function selectMode(mode,button){
+
+    $$(".nav button[data-mode]")
+        .forEach(
+            item =>
+                item.classList.remove("active")
+        );
+
+    if(button){
+
+        button.classList.add("active");
+
+    }else{
+
+        const target =
+            $(`.nav button[data-mode="${CSS.escape(mode)}"]`);
+
+        target?.classList.add("active");
+
+    }
+
+    changeMode(mode);
+
+    toggleSidebar(false);
+
+}
+
+
+function formatModelName(model){
+
+    return model
+        .replace(
+            /^gemini-/,
+            "Gemini "
+        )
+        .replaceAll(
+            "-",
+            " "
+        )
+        .replace(
+            /\bflash\b/i,
+            "Flash"
+        )
+        .replace(
+            /\bpro\b/i,
+            "Pro"
+        );
+
+}
+
+
+/* =========================================================
+   SYSTEM PROMPT
+========================================================= */
+
+function getSystemInstruction(){
+
+    const base = `
+You are Asep AI.
+
+You are a helpful, accurate and practical AI assistant.
+
+Important rules:
+- Do not claim that you executed code unless execution actually happened.
+- Do not invent API results, test results, files, or external actions.
+- If information is uncertain, clearly say so.
+- Keep answers useful and reasonably concise.
+- Respect the user's requested language.
+`;
+
+    const modes = {
+
+        "Ultimate Coding":`
+You are an expert software engineer.
+
+Priorities:
+- Produce complete working solutions.
+- Analyze bugs and edge cases carefully.
+- Preserve existing functionality when modifying code.
+- Prefer maintainable architecture.
+- Make frontend code responsive.
+- Explain important changes briefly.
+- Never intentionally omit critical code.
+- When debugging, identify the cause and provide corrected code.
+- Use Markdown code fences for code.
+`,
+
+        "Creative":`
+You are Asep AI Creative.
+
+Focus on:
+- Creative concepts.
+- UI/UX ideas.
+- Stories.
+- Prompts.
+- Branding.
+- Content.
+- Original practical ideas.
+
+Be imaginative while keeping outputs usable.
+`,
+
+        "Study":`
+You are Asep AI Study.
+
+Teach clearly and step by step.
+
+Priorities:
+- Build understanding.
+- Use simple examples.
+- Explain difficult concepts in accessible language.
+- Avoid unnecessary complexity.
+`,
+
+        "Debug":`
+You are Asep AI Debugger.
+
+Analyze code systematically.
+
+When debugging:
+1. Identify likely causes.
+2. Explain why they happen.
+3. Point out edge cases.
+4. Provide corrected code.
+5. Mention anything that still needs real-world testing.
+
+Never claim execution unless execution actually happened.
+`,
+
+        "General":`
+Answer as a general-purpose intelligent assistant.
+Be useful, accurate and concise.
+`
+
+    };
+
+    return (
+        base +
+        "\n" +
+        (modes[state.currentMode] || modes.General)
+    );
+
+}
+
+
+/* =========================================================
+   API KEY
+========================================================= */
+
+function openApiModal(){
+
+    openModal("apiModal");
+
+    els.apiInput.value =
+        state.apiKey;
+
+}
+
+
+async function pasteKey(){
+
+    try{
+
+        if(
+            navigator.clipboard &&
+            typeof navigator.clipboard.readText === "function"
+        ){
+
+            const text =
+                await navigator.clipboard.readText();
+
+            if(text.trim()){
+
+                els.apiInput.value =
+                    text.trim();
+
+                showToast(
+                    "API key ditempel"
+                );
+
+            }else{
+
+                showToast(
+                    "Clipboard kosong"
+                );
+
+            }
+
+        }else{
+
+            showToast(
+                "Tekan lama kolom lalu pilih Tempel"
+            );
+
+        }
+
+    }catch{
+
+        showToast(
+            "Clipboard dibatasi browser. Tekan lama kolom lalu pilih Tempel."
+        );
+
+    }
+
+}
+
+
 function saveApiKey(){
 
     const value =
-        document.getElementById("apiInput")
-        .value
-        .trim();
+        els.apiInput.value.trim();
 
     if(!value){
 
-        showToast("API key belum diisi");
+        showToast(
+            "API key belum diisi"
+        );
+
+        els.apiInput.focus();
+
         return;
 
     }
 
-    apiKey=value;
+    if(value.length < 20){
 
-    localStorage.setItem(
-        "ASEP_API_KEY",
-        apiKey
+        showToast(
+            "API key terlihat terlalu pendek"
+        );
+
+        return;
+
+    }
+
+    state.apiKey = value;
+
+    Storage.set(
+        CONFIG.STORAGE_KEYS.API,
+        state.apiKey
     );
 
     closeModal("apiModal");
 
-    showToast("Gemini berhasil dihubungkan");
+    showToast(
+        "Gemini berhasil dihubungkan"
+    );
 
 }
 
-/* =========================================
+
+/* =========================================================
    TOPUP
-========================================= */
+========================================================= */
 
 function openTopup(){
 
-    document
-        .getElementById("topupModal")
-        .classList.add("show");
-
-    setTimeout(()=>{
-        document
-            .getElementById("topupInput")
-            .focus();
-    },150);
+    openModal("topupModal");
 
 }
+
 
 function activateTopup(){
 
     const code =
-        document
-            .getElementById("topupInput")
-            .value
+        els.topupInput.value
             .trim();
 
-    if(code !== TOPUP_CODE){
+    if(
+        !code ||
+        code.toLowerCase() !==
+        CONFIG.TOPUP_CODE.toLowerCase()
+    ){
 
-        showToast("Topup code tidak valid");
+        showToast(
+            "Topup code tidak valid"
+        );
+
         return;
 
     }
 
-    unlimited=true;
+    state.unlimited = true;
 
-    localStorage.setItem(
-        "ASEP_UNLIMITED",
+    Storage.set(
+        CONFIG.STORAGE_KEYS.UNLIMITED,
         "true"
     );
 
@@ -1438,46 +3453,54 @@ function activateTopup(){
 
     updateCredits();
 
-    showToast("♾️ Asep AI sekarang Unlimited");
+    showToast(
+        "♾️ Asep AI sekarang Unlimited"
+    );
 
 }
 
-/* =========================================
+
+/* =========================================================
    CREDIT
-========================================= */
+========================================================= */
 
 function updateCredits(){
 
-    const text =
-        document.getElementById("creditText");
+    if(state.unlimited){
 
-    const fill =
-        document.getElementById("creditFill");
+        els.creditText.textContent =
+            "∞";
 
-    if(unlimited){
+        els.creditFill.style.width =
+            "100%";
 
-        text.textContent="∞";
-
-        fill.style.width="100%";
-
-    }else{
-
-        text.textContent=credits;
-
-        fill.style.width =
-            credits > 0 ? "100%" : "0%";
+        return;
 
     }
+
+    els.creditText.textContent =
+        String(
+            Math.max(
+                0,
+                state.credits
+            )
+        );
+
+    els.creditFill.style.width =
+        state.credits > 0
+            ? "100%"
+            : "0%";
 
 }
 
-function consumeCredit(){
 
-    if(unlimited){
+function hasCredit(){
+
+    if(state.unlimited){
         return true;
     }
 
-    if(credits <= 0){
+    if(state.credits <= 0){
 
         openTopup();
 
@@ -1489,692 +3512,491 @@ function consumeCredit(){
 
     }
 
-    credits--;
+    return true;
 
-    localStorage.setItem(
-        "ASEP_CREDITS",
-        String(credits)
+}
+
+
+function consumeCredit(){
+
+    if(state.unlimited){
+        return true;
+    }
+
+    if(state.credits <= 0){
+        return false;
+    }
+
+    state.credits--;
+
+    Storage.set(
+        CONFIG.STORAGE_KEYS.CREDITS,
+        state.credits
     );
 
     updateCredits();
 
     return true;
-}
-
-/* =========================================
-   MODE
-========================================= */
-
-let currentMode="General";
-
-function changeMode(mode){
-
-    currentMode=mode;
-
-    document.getElementById("modeName")
-        .textContent =
-        mode === "General"
-        ? "Asep AI"
-        : mode;
-
-    document.getElementById("modeSelect")
-        .value=mode;
-
-    if(mode==="Ultimate Coding"){
-
-        document.getElementById("modeSub")
-            .textContent =
-            "Gemini 3.7 Flash · Coding";
-
-        promptBox.placeholder =
-            "Build, debug, refactor, atau jelaskan kode...";
-
-    }else{
-
-        document.getElementById("modeSub")
-            .textContent =
-            model.replace("gemini-","Gemini ");
-
-        promptBox.placeholder =
-            "Tanyakan sesuatu kepada Asep AI...";
-
-    }
 
 }
 
-function selectMode(mode,button){
 
-    document
-        .querySelectorAll(".nav button")
-        .forEach(b=>b.classList.remove("active"));
+/* =========================================================
+   TEXTAREA
+========================================================= */
 
-    if(button){
-        button.classList.add("active");
-    }
+function autoResizeTextarea(){
 
-    changeMode(mode);
+    els.prompt.style.height =
+        "auto";
 
-    document
-        .getElementById("modeSelect")
-        .value=mode;
+    const height =
+        Math.min(
+            els.prompt.scrollHeight,
+            150
+        );
 
-    toggleSidebar(false);
+    els.prompt.style.height =
+        `${height}px`;
 
 }
 
-/* =========================================
-   SYSTEM PROMPT
-========================================= */
 
-function getSystemInstruction(){
+function resetTextarea(){
 
-    if(currentMode==="Ultimate Coding"){
+    els.prompt.value = "";
 
-        return `
-You are Asep AI Ultimate Coding, an expert software engineer.
+    els.prompt.style.height =
+        "48px";
 
-Your job is to help users build production-quality software.
-
-Priorities:
-- Write complete, working code.
-- Prefer clean, maintainable architecture.
-- Explain important decisions briefly.
-- Detect bugs and edge cases.
-- Never intentionally omit important code.
-- When creating HTML/CSS/JS, make it responsive and polished.
-- When appropriate, provide complete files instead of fragments.
-- Preserve existing functionality when asked to improve code.
-- Do not claim code was executed if it was not actually executed.
-- Use Markdown code fences for code.
-- If the user asks to debug code, identify the likely cause and provide a corrected version.
-
-Be concise but technically useful.
-`;
-
-    }
-
-    if(currentMode==="Creative"){
-
-        return `
-You are Asep AI Creative.
-Help generate strong creative ideas, concepts, UI concepts,
-stories, prompts, branding, and content.
-Be imaginative while keeping outputs practical.
-`;
-
-    }
-
-    if(currentMode==="Study"){
-
-        return `
-You are Asep AI Study.
-Teach clearly and step-by-step.
-Focus on understanding rather than merely giving answers.
-Use simple examples when useful.
-`;
-
-    }
-
-    if(currentMode==="Debug"){
-
-        return `
-You are Asep AI Debugger.
-Analyze code carefully.
-Identify errors, likely causes, edge cases, and corrected code.
-Do not invent execution results.
-`;
-
-    }
-
-    return `
-You are Asep AI, a helpful intelligent assistant.
-Give accurate, useful, concise answers.
-`;
 }
 
-/* =========================================
-   SEND MESSAGE
-========================================= */
+
+function handlePromptKeydown(event){
+
+    if(
+        event.key === "Enter" &&
+        !event.shiftKey &&
+        !event.isComposing
+    ){
+
+        event.preventDefault();
+
+        sendMessage();
+
+    }
+
+}
+
+
+/* =========================================================
+   SEND
+========================================================= */
 
 async function sendMessage(){
 
-    const text =
-        promptBox.value.trim();
+    if(state.isGenerating){
 
-    if(!text) return;
-
-    if(!apiKey){
-
-        openApiModal();
         return;
 
     }
 
-    if(!consumeCredit()) return;
+    const text =
+        els.prompt.value.trim();
 
-    addMessage("user",text);
+    if(!text){
+        return;
+    }
 
-    promptBox.value="";
-    promptBox.style.height="48px";
+    if(!state.apiKey){
 
-    sendBtn.disabled=true;
+        openApiModal();
+
+        return;
+
+    }
+
+    if(!hasCredit()){
+
+        return;
+
+    }
+
+
+    state.isGenerating = true;
+
+    setSendLoading(true);
+
+
+    hideWelcome();
+
+
+    addMessage(
+        "user",
+        text
+    );
+
+
+    state.conversation.push({
+        role:"user",
+        parts:[
+            {
+                text
+            }
+        ]
+    });
+
+
+    /* Prevent huge conversation payload */
+
+    if(
+        state.conversation.length >
+        CONFIG.MAX_MESSAGES_PER_CHAT
+    ){
+
+        state.conversation =
+            state.conversation.slice(
+                -CONFIG.MAX_MESSAGES_PER_CHAT
+            );
+
+    }
+
+
+    resetTextarea();
+
 
     const aiContent =
         addAIMessage("");
 
-    try{
 
-        const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`,
-            {
-                method:"POST",
+    showTyping(aiContent);
 
-                headers:{
-                    "Content-Type":"application/json"
-                },
 
-                body:JSON.stringify({
+    const controller =
+        new AbortController();
 
-                    systemInstruction:{
-                        parts:[
-                            {
-                                text:getSystemInstruction()
-                            }
-                        ]
-                    },
+    state.abortController =
+        controller;
 
-                    contents:[
-                        {
-                            role:"user",
-                            parts:[
-                                {
-                                    text:text
-                                }
-                            ]
-                        }
-                    ],
 
-                    generationConfig:{
-                        temperature:
-                            currentMode==="Ultimate Coding"
-                            ? 0.25
-                            : 0.7,
-
-                        maxOutputTokens:8192
-                    }
-
-                })
-
-            }
+    const timeout =
+        setTimeout(
+            () => controller.abort(),
+            CONFIG.REQUEST_TIMEOUT
         );
 
-        const data =
-            await response.json();
 
-        if(!response.ok){
+    try{
+
+        const response =
+            await fetchGemini(
+                controller.signal
+            );
+
+
+        clearTimeout(timeout);
+
+
+        const answer =
+            extractGeminiText(response);
+
+
+        if(!answer){
 
             throw new Error(
-                data?.error?.message ||
-                "Gemini API error"
+                "Gemini mengembalikan respons kosong."
             );
 
         }
 
-        const answer =
-            data?.candidates?.[0]
-                ?.content?.parts
-                ?.map(part=>part.text || "")
-                .join("") ||
-            "Asep AI tidak menerima respons teks.";
+
+        removeTyping(aiContent);
+
 
         await typeResponse(
             aiContent,
             answer
         );
 
-        saveHistory(text,answer);
 
-    }catch(error){
+        /* Credit only consumed AFTER successful API response */
 
-        aiContent.textContent =
-            "⚠️ Error: " +
-            error.message;
+        consumeCredit();
 
-    }finally{
 
-        sendBtn.disabled=false;
-        promptBox.focus();
+        state.conversation.push({
+            role:"model",
+            parts:[
+                {
+                    text:answer
+                }
+            ]
+        });
 
-    }
 
-}
+        if(
+            state.conversation.length >
+            CONFIG.MAX_MESSAGES_PER_CHAT
+        ){
 
-/* =========================================
-   MESSAGE UI
-========================================= */
-
-function addMessage(type,text){
-
-    hideWelcome();
-
-    const wrapper =
-        document.createElement("div");
-
-    wrapper.className =
-        "message " + type;
-
-    const avatar =
-        document.createElement("div");
-
-    avatar.className="avatar";
-
-    avatar.textContent =
-        type==="ai" ? "✦" : "U";
-
-    const body =
-        document.createElement("div");
-
-    body.className="msg-body";
-
-    const name =
-        document.createElement("div");
-
-    name.className="msg-name";
-
-    name.textContent =
-        type==="ai" ? "Asep AI" : "Kamu";
-
-    const content =
-        document.createElement("div");
-
-    content.className="msg-text";
-
-    content.textContent=text;
-
-    body.appendChild(name);
-    body.appendChild(content);
-
-    wrapper.appendChild(avatar);
-    wrapper.appendChild(body);
-
-    messages.appendChild(wrapper);
-
-    scrollBottom();
-
-}
-
-function addAIMessage(text){
-
-    hideWelcome();
-
-    const wrapper =
-        document.createElement("div");
-
-    wrapper.className="message ai";
-
-    const avatar =
-        document.createElement("div");
-
-    avatar.className="avatar";
-    avatar.textContent="✦";
-
-    const body =
-        document.createElement("div");
-
-    body.className="msg-body";
-
-    const name =
-        document.createElement("div");
-
-    name.className="msg-name";
-    name.textContent="Asep AI";
-
-    const content =
-        document.createElement("div");
-
-    content.className="msg-text";
-    content.textContent=text;
-
-    body.appendChild(name);
-    body.appendChild(content);
-
-    wrapper.appendChild(avatar);
-    wrapper.appendChild(body);
-
-    messages.appendChild(wrapper);
-
-    scrollBottom();
-
-    return content;
-
-}
-
-/* =========================================
-   TYPE RESPONSE
-========================================= */
-
-async function typeResponse(element,text){
-
-    /*
-        Render code blocks nicely.
-    */
-
-    const parts =
-        text.split(/(```[\s\S]*?```)/g);
-
-    element.innerHTML="";
-
-    for(const part of parts){
-
-        if(part.startsWith("```")){
-
-            const match =
-                part.match(/^```(\w*)\n?([\s\S]*?)```$/);
-
-            const language =
-                match?.[1] || "code";
-
-            const code =
-                match?.[2] || part
-                    .replace(/^```/,"")
-                    .replace(/```$/,"");
-
-            const wrap =
-                document.createElement("div");
-
-            wrap.className="code-wrap";
-
-            const head =
-                document.createElement("div");
-
-            head.className="code-head";
-
-            const lang =
-                document.createElement("span");
-
-            lang.className="code-lang";
-
-            lang.textContent=language;
-
-            const copy =
-                document.createElement("button");
-
-            copy.className="copy-code";
-            copy.textContent="Copy";
-
-            copy.onclick=()=>{
-
-                navigator.clipboard
-                    ?.writeText(code);
-
-                copy.textContent="Copied";
-
-                setTimeout(()=>{
-                    copy.textContent="Copy";
-                },1200);
-
-            };
-
-            head.appendChild(lang);
-            head.appendChild(copy);
-
-            const pre =
-                document.createElement("pre");
-
-            pre.className="code";
-            pre.textContent=code;
-
-            wrap.appendChild(head);
-            wrap.appendChild(pre);
-
-            element.appendChild(wrap);
-
-        }else{
-
-            const span =
-                document.createElement("span");
-
-            span.textContent=part;
-
-            element.appendChild(span);
+            state.conversation =
+                state.conversation.slice(
+                    -CONFIG.MAX_MESSAGES_PER_CHAT
+                );
 
         }
 
-    }
 
-    scrollBottom();
-
-}
-
-/* =========================================
-   QUICK PROMPT
-========================================= */
-
-function usePrompt(text){
-
-    promptBox.value=text;
-
-    promptBox.dispatchEvent(
-        new Event("input")
-    );
-
-    promptBox.focus();
-
-}
-
-/* =========================================
-   NEW CHAT
-========================================= */
-
-function newChat(){
-
-    messages.innerHTML=`
-
-        <section class="welcome" id="welcome">
-
-            <div class="welcome-logo">
-                <span class="hand">A</span>
-                <span class="welcome-crown">♛</span>
-            </div>
-
-            <h1>
-                Welcome to
-                <span class="gradient-text">Asep AI</span>
-            </h1>
-
-            <p>
-                Asisten AI untuk coding, debugging,
-                ide kreatif, belajar, dan berbagai
-                pekerjaan sehari-hari.
-            </p>
-
-            <div class="quick-grid">
-
-                <button class="quick"
-                    onclick="usePrompt('Buatkan landing page HTML modern untuk sebuah aplikasi AI')">
-                    <b>💻 Build</b>
-                    <span>Buat website</span>
-                </button>
-
-                <button class="quick"
-                    onclick="usePrompt('Bantu aku debug kode JavaScript ini dan jelaskan masalahnya')">
-                    <b>🐞 Debug</b>
-                    <span>Temukan bug</span>
-                </button>
-
-                <button class="quick"
-                    onclick="usePrompt('Buatkan ide project coding yang keren')">
-                    <b>💡 Ide</b>
-                    <span>Project baru</span>
-                </button>
-
-                <button class="quick"
-                    onclick="usePrompt('Jelaskan konsep JavaScript async dan await dengan sederhana')">
-                    <b>📚 Learn</b>
-                    <span>Belajar coding</span>
-                </button>
-
-            </div>
-
-        </section>
-    `;
-
-    scrollBottom();
-
-}
-
-/* =========================================
-   HISTORY
-========================================= */
-
-function saveHistory(user,ai){
-
-    const history =
-        JSON.parse(
-            localStorage.getItem("ASEP_HISTORY") || "[]"
+        saveHistory(
+            text,
+            answer
         );
 
-    history.unshift({
-        user,
-        ai,
-        date:new Date().toISOString()
-    });
 
-    localStorage.setItem(
-        "ASEP_HISTORY",
-        JSON.stringify(
-            history.slice(0,30)
+    }catch(error){
+
+        clearTimeout(timeout);
+
+        removeTyping(aiContent);
+
+        handleApiError(
+            aiContent,
+            error
+        );
+
+        /*
+         * Remove failed user message from
+         * current conversation so a retry
+         * doesn't duplicate it.
+         */
+
+        state.conversation =
+            state.conversation.filter(
+                (_,index) =>
+                    index !==
+                    state.conversation.length - 1
+            );
+
+    }finally{
+
+        state.abortController = null;
+
+        state.isGenerating = false;
+
+        setSendLoading(false);
+
+        els.prompt.focus();
+
+    }
+
+}
+
+
+/* =========================================================
+   GEMINI REQUEST
+========================================================= */
+
+async function fetchGemini(signal){
+
+    const url =
+        `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(state.model)}:generateContent?key=${encodeURIComponent(state.apiKey)}`;
+
+
+    const body = {
+
+        systemInstruction:{
+            parts:[
+                {
+                    text:
+                        getSystemInstruction()
+                }
+            ]
+        },
+
+        contents:
+            state.conversation,
+
+        generationConfig:{
+
+            temperature:
+                state.currentMode === "Ultimate Coding" ||
+                state.currentMode === "Debug"
+                    ? 0.25
+                    : 0.7,
+
+            maxOutputTokens:8192
+
+        }
+
+    };
+
+
+    const response =
+        await fetch(
+            url,
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body:
+                    JSON.stringify(body),
+
+                signal
+
+            }
+        );
+
+
+    let data = null;
+
+    try{
+
+        data =
+            await response.json();
+
+    }catch{
+
+        throw new Error(
+            `Server mengembalikan respons tidak valid (${response.status}).`
+        );
+
+    }
+
+
+    if(!response.ok){
+
+        const message =
+            data?.error?.message ||
+            `Gemini API error (${response.status})`;
+
+        const error =
+            new Error(message);
+
+        error.status =
+            response.status;
+
+        error.apiData =
+            data;
+
+        throw error;
+
+    }
+
+
+    return data;
+
+}
+
+
+/* =========================================================
+   EXTRACT RESPONSE
+========================================================= */
+
+function extractGeminiText(data){
+
+    const parts =
+        data?.candidates?.[0]
+            ?.content
+            ?.parts;
+
+    if(!Array.isArray(parts)){
+        return "";
+    }
+
+    return parts
+        .map(
+            part =>
+                typeof part.text === "string"
+                    ? part.text
+                    : ""
         )
-    );
+        .join("")
+        .trim();
 
 }
 
-function showHistory(){
 
-    const history =
-        JSON.parse(
-            localStorage.getItem("ASEP_HISTORY") || "[]"
-        );
+/* =========================================================
+   API ERROR
+========================================================= */
 
-    if(!history.length){
+function handleApiError(element,error){
 
-        showToast("Belum ada riwayat chat");
-        return;
+    let message =
+        error?.message ||
+        "Terjadi kesalahan tidak diketahui.";
+
+
+    if(error?.name === "AbortError"){
+
+        message =
+            "Request dibatalkan atau terlalu lama.";
 
     }
 
-    const latest=history[0];
 
-    newChat();
+    if(
+        error?.status === 400 ||
+        error?.status === 401 ||
+        error?.status === 403
+    ){
 
-    addMessage(
-        "user",
-        latest.user
-    );
-
-    addMessage(
-        "ai",
-        latest.ai
-    );
-
-    toggleSidebar(false);
-
-}
-
-/* =========================================
-   SETTINGS
-========================================= */
-
-function openSettings(){
-
-    document
-        .getElementById("settingsModal")
-        .classList.add("show");
-
-}
-
-function saveModel(){
-
-    model =
-        document
-            .getElementById("modelSelect")
-            .value;
-
-    localStorage.setItem(
-        "ASEP_MODEL",
-        model
-    );
-
-    changeMode(currentMode);
-
-    showToast("Model diperbarui");
-
-}
-
-/* =========================================
-   CLEAR DATA
-========================================= */
-
-function clearAllData(){
-
-    if(!confirm(
-        "Hapus API key, credit, history, dan pengaturan lokal?"
-    )) return;
-
-    localStorage.removeItem("ASEP_API_KEY");
-    localStorage.removeItem("ASEP_CREDITS");
-    localStorage.removeItem("ASEP_UNLIMITED");
-    localStorage.removeItem("ASEP_HISTORY");
-    localStorage.removeItem("ASEP_MODEL");
-
-    location.reload();
-
-}
-
-/* =========================================
-   MODAL
-========================================= */
-
-function closeModal(id){
-
-    document
-        .getElementById(id)
-        .classList.remove("show");
-
-}
-
-/* =========================================
-   SIDEBAR
-========================================= */
-
-function toggleSidebar(force){
-
-    const sidebar =
-        document.getElementById("sidebar");
-
-    if(typeof force==="boolean"){
-
-        sidebar.classList.toggle(
-            "open",
-            force
-        );
-
-    }else{
-
-        sidebar.classList.toggle("open");
+        message =
+            "API key tidak valid atau tidak memiliki akses ke model ini.";
 
     }
 
+
+    if(error?.status === 404){
+
+        message =
+            `Model "${state.model}" tidak ditemukan. Pilih model lain di Pengaturan.`;
+
+    }
+
+
+    if(error?.status === 429){
+
+        message =
+            "Limit request Gemini tercapai. Coba lagi beberapa saat.";
+
+    }
+
+
+    if(
+        error?.status >= 500 &&
+        error?.status <= 599
+    ){
+
+        message =
+            "Server Gemini sedang bermasalah. Coba lagi nanti.";
+
+    }
+
+
+    element.textContent =
+        `⚠️ ${message}`;
+
+
+    showToast(
+        message
+    );
+
 }
 
-/* =========================================
-   UTILS
-========================================= */
+
+/* =========================================================
+   MESSAGE UI
+========================================================= */
 
 function hideWelcome(){
 
     const welcome =
-        document.getElementById("welcome");
+        $("#welcome");
 
     if(welcome){
         welcome.remove();
@@ -2182,46 +4004,1132 @@ function hideWelcome(){
 
 }
 
-function scrollBottom(){
 
-    requestAnimationFrame(()=>{
-        chat.scrollTop=chat.scrollHeight;
-    });
+function addMessage(type,text){
+
+    hideWelcome();
+
+    const wrapper =
+        createMessageElement(
+            type,
+            text
+        );
+
+    els.messages.appendChild(
+        wrapper
+    );
+
+    scrollBottom();
+
+    return wrapper;
 
 }
 
-let toastTimer;
+
+function addAIMessage(text){
+
+    hideWelcome();
+
+    const wrapper =
+        createMessageElement(
+            "ai",
+            text
+        );
+
+    els.messages.appendChild(
+        wrapper
+    );
+
+    scrollBottom();
+
+    return wrapper.querySelector(
+        ".msg-text"
+    );
+
+}
+
+
+function createMessageElement(type,text){
+
+    const wrapper =
+        document.createElement("div");
+
+    wrapper.className =
+        `message ${type}`;
+
+
+    const avatar =
+        document.createElement("div");
+
+    avatar.className =
+        "avatar";
+
+    avatar.textContent =
+        type === "ai"
+            ? "✦"
+            : "U";
+
+
+    const body =
+        document.createElement("div");
+
+    body.className =
+        "msg-body";
+
+
+    const name =
+        document.createElement("div");
+
+    name.className =
+        "msg-name";
+
+    name.textContent =
+        type === "ai"
+            ? "Asep AI"
+            : "Kamu";
+
+
+    const content =
+        document.createElement("div");
+
+    content.className =
+        "msg-text";
+
+    content.textContent =
+        text;
+
+
+    body.append(
+        name,
+        content
+    );
+
+    wrapper.append(
+        avatar,
+        body
+    );
+
+
+    if(
+        type === "ai" &&
+        text
+    ){
+
+        addCopyMessageButton(
+            body,
+            text
+        );
+
+    }
+
+
+    return wrapper;
+
+}
+
+
+/* =========================================================
+   COPY MESSAGE
+========================================================= */
+
+function addCopyMessageButton(body,text){
+
+    const button =
+        document.createElement("button");
+
+    button.className =
+        "copy-message";
+
+    button.type =
+        "button";
+
+    button.textContent =
+        "Copy";
+
+    button.addEventListener(
+        "click",
+        async () => {
+
+            const success =
+                await copyText(text);
+
+            button.textContent =
+                success
+                    ? "Copied"
+                    : "Gagal";
+
+            setTimeout(
+                () => {
+                    button.textContent =
+                        "Copy";
+                },
+                1200
+            );
+
+        }
+    );
+
+    body.appendChild(
+        button
+    );
+
+}
+
+
+/* =========================================================
+   TYPING
+========================================================= */
+
+function showTyping(element){
+
+    element.replaceChildren();
+
+    const wrapper =
+        document.createElement("span");
+
+    wrapper.className =
+        "typing";
+
+    for(let i = 0; i < 3; i++){
+
+        wrapper.appendChild(
+            document.createElement("span")
+        );
+
+    }
+
+    element.appendChild(
+        wrapper
+    );
+
+}
+
+
+function removeTyping(element){
+
+    element.replaceChildren();
+
+}
+
+
+/* =========================================================
+   SAFE RESPONSE RENDERER
+========================================================= */
+
+async function typeResponse(element,text){
+
+    /*
+     * This renderer intentionally does NOT inject
+     * AI output directly through innerHTML.
+     *
+     * This avoids HTML/script injection from
+     * model-generated content.
+     */
+
+    element.replaceChildren();
+
+
+    const parts =
+        text.split(
+            /(```[\s\S]*?```)/g
+        );
+
+
+    for(const part of parts){
+
+        if(
+            part.startsWith("```")
+        ){
+
+            renderCodeBlock(
+                element,
+                part
+            );
+
+        }else{
+
+            renderPlainText(
+                element,
+                part
+            );
+
+        }
+
+    }
+
+
+    addCopyMessageButton(
+        element.parentElement,
+        text
+    );
+
+
+    scrollBottom();
+
+}
+
+
+function renderPlainText(
+    container,
+    text
+){
+
+    if(!text){
+        return;
+    }
+
+    const fragment =
+        document.createDocumentFragment();
+
+    const lines =
+        text.split("\n");
+
+
+    lines.forEach(
+        (line,index) => {
+
+            const span =
+                document.createElement("span");
+
+            span.textContent =
+                line;
+
+            fragment.appendChild(
+                span
+            );
+
+
+            if(
+                index <
+                lines.length - 1
+            ){
+
+                fragment.appendChild(
+                    document.createElement("br")
+                );
+
+            }
+
+        }
+    );
+
+
+    container.appendChild(
+        fragment
+    );
+
+}
+
+
+function renderCodeBlock(
+    container,
+    block
+){
+
+    const match =
+        block.match(
+            /^```([a-zA-Z0-9_+#.-]*)\s*\n?([\s\S]*?)```$/
+        );
+
+
+    const language =
+        match?.[1] ||
+        "code";
+
+
+    let code =
+        match?.[2] ??
+        block
+            .replace(/^```/, "")
+            .replace(/```$/, "");
+
+
+    if(
+        code.endsWith("\n")
+    ){
+
+        code =
+            code.slice(
+                0,
+                -1
+            );
+
+    }
+
+
+    const wrap =
+        document.createElement("div");
+
+    wrap.className =
+        "code-wrap";
+
+
+    const head =
+        document.createElement("div");
+
+    head.className =
+        "code-head";
+
+
+    const lang =
+        document.createElement("span");
+
+    lang.className =
+        "code-lang";
+
+    lang.textContent =
+        language;
+
+
+    const copy =
+        document.createElement("button");
+
+    copy.className =
+        "copy-code";
+
+    copy.type =
+        "button";
+
+    copy.textContent =
+        "Copy";
+
+
+    copy.addEventListener(
+        "click",
+        async () => {
+
+            const success =
+                await copyText(code);
+
+            copy.textContent =
+                success
+                    ? "Copied"
+                    : "Gagal";
+
+            setTimeout(
+                () => {
+                    copy.textContent =
+                        "Copy";
+                },
+                1200
+            );
+
+        }
+    );
+
+
+    head.append(
+        lang,
+        copy
+    );
+
+
+    const pre =
+        document.createElement("pre");
+
+    pre.className =
+        "code";
+
+    pre.textContent =
+        code;
+
+
+    wrap.append(
+        head,
+        pre
+    );
+
+
+    container.appendChild(
+        wrap
+    );
+
+}
+
+
+/* =========================================================
+   QUICK PROMPT
+========================================================= */
+
+function usePrompt(text){
+
+    els.prompt.value =
+        text;
+
+    autoResizeTextarea();
+
+    els.prompt.focus();
+
+}
+
+
+/* =========================================================
+   NEW CHAT
+========================================================= */
+
+function newChat(){
+
+    /*
+     * If there is an active request,
+     * cancel it before creating a new chat.
+     */
+
+    if(state.abortController){
+
+        state.abortController.abort();
+
+    }
+
+
+    state.conversation = [];
+
+    state.isGenerating = false;
+
+    setSendLoading(false);
+
+    resetTextarea();
+
+    renderWelcome();
+
+    scrollBottom();
+
+    toggleSidebar(false);
+
+}
+
+
+/* =========================================================
+   HISTORY STORAGE
+========================================================= */
+
+function getHistory(){
+
+    const history =
+        Storage.getJSON(
+            CONFIG.STORAGE_KEYS.HISTORY,
+            []
+        );
+
+    if(!Array.isArray(history)){
+        return [];
+    }
+
+    return history;
+
+}
+
+
+function saveHistory(user,ai){
+
+    const history =
+        getHistory();
+
+
+    const item = {
+
+        id:
+            crypto.randomUUID
+            ? crypto.randomUUID()
+            : `${Date.now()}-${Math.random()}`,
+
+        title:
+            user.length > 80
+                ? `${user.slice(0,80)}…`
+                : user,
+
+        messages:[
+            {
+                role:"user",
+                text:user
+            },
+            {
+                role:"ai",
+                text:ai
+            }
+        ],
+
+        date:
+            new Date().toISOString()
+
+    };
+
+
+    history.unshift(item);
+
+
+    const limited =
+        history.slice(
+            0,
+            CONFIG.MAX_HISTORY
+        );
+
+
+    Storage.setJSON(
+        CONFIG.STORAGE_KEYS.HISTORY,
+        limited
+    );
+
+}
+
+
+/* =========================================================
+   HISTORY UI
+========================================================= */
+
+function showHistory(){
+
+    const history =
+        getHistory();
+
+
+    if(!history.length){
+
+        showToast(
+            "Belum ada riwayat chat"
+        );
+
+        return;
+
+    }
+
+
+    els.historyList.replaceChildren();
+
+
+    history.forEach(
+        item => {
+
+            const button =
+                document.createElement("button");
+
+            button.className =
+                "history-item";
+
+            button.type =
+                "button";
+
+
+            const title =
+                document.createElement("span");
+
+            title.className =
+                "history-title";
+
+            title.textContent =
+                item.title ||
+                "Percakapan";
+
+
+            const date =
+                document.createElement("span");
+
+            date.className =
+                "history-date";
+
+            date.textContent =
+                formatDate(
+                    item.date
+                );
+
+
+            button.append(
+                title,
+                date
+            );
+
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    loadHistory(
+                        item
+                    );
+
+                    closeModal(
+                        "historyModal"
+                    );
+
+                }
+            );
+
+
+            els.historyList.appendChild(
+                button
+            );
+
+        }
+    );
+
+
+    openModal(
+        "historyModal"
+    );
+
+}
+
+
+function loadHistory(item){
+
+    newChat();
+
+
+    const conversation =
+        item?.messages;
+
+
+    if(
+        !Array.isArray(conversation)
+    ){
+
+        return;
+
+    }
+
+
+    conversation.forEach(
+        message => {
+
+            if(
+                message.role === "user"
+            ){
+
+                addMessage(
+                    "user",
+                    message.text || ""
+                );
+
+            }else if(
+                message.role === "ai"
+            ){
+
+                addMessage(
+                    "ai",
+                    message.text || ""
+                );
+
+            }
+
+        }
+    );
+
+
+    scrollBottom();
+
+}
+
+
+function formatDate(value){
+
+    try{
+
+        return new Intl.DateTimeFormat(
+            "id-ID",
+            {
+                dateStyle:"medium",
+                timeStyle:"short"
+            }
+        ).format(
+            new Date(value)
+        );
+
+    }catch{
+
+        return "";
+
+    }
+
+}
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+function openSettings(){
+
+    els.modelSelect.value =
+        state.model;
+
+    openModal(
+        "settingsModal"
+    );
+
+}
+
+
+function saveModel(){
+
+    const selected =
+        els.modelSelect.value;
+
+
+    if(
+        !VALID_MODELS.has(selected)
+    ){
+
+        showToast(
+            "Model tidak valid"
+        );
+
+        return;
+
+    }
+
+
+    state.model =
+        selected;
+
+
+    Storage.set(
+        CONFIG.STORAGE_KEYS.MODEL,
+        state.model
+    );
+
+
+    updateModeUI();
+
+
+    closeModal(
+        "settingsModal"
+    );
+
+
+    showToast(
+        "Model diperbarui"
+    );
+
+}
+
+
+/* =========================================================
+   CLEAR DATA
+========================================================= */
+
+function clearAllData(){
+
+    const confirmed =
+        window.confirm(
+            "Hapus API key, credit, history, mode unlimited, dan pengaturan lokal?"
+        );
+
+
+    if(!confirmed){
+        return;
+    }
+
+
+    if(state.abortController){
+
+        state.abortController.abort();
+
+    }
+
+
+    Object.values(
+        CONFIG.STORAGE_KEYS
+    ).forEach(
+        key =>
+            Storage.remove(key)
+    );
+
+
+    location.reload();
+
+}
+
+
+/* =========================================================
+   MODALS
+========================================================= */
+
+function openModal(id){
+
+    const modal =
+        document.getElementById(id);
+
+    if(!modal){
+        return;
+    }
+
+
+    modal.classList.add(
+        "show"
+    );
+
+
+    document.body.style.overflow =
+        "hidden";
+
+
+    const input =
+        modal.querySelector(
+            "input,select,button"
+        );
+
+
+    if(input){
+
+        setTimeout(
+            () => input.focus(),
+            100
+        );
+
+    }
+
+}
+
+
+function closeModal(id){
+
+    const modal =
+        document.getElementById(id);
+
+    if(!modal){
+        return;
+    }
+
+
+    modal.classList.remove(
+        "show"
+    );
+
+
+    if(
+        !$(".overlay.show")
+    ){
+
+        document.body.style.overflow =
+            "";
+
+    }
+
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+function toggleSidebar(force){
+
+    if(
+        window.innerWidth > 750
+    ){
+
+        return;
+
+    }
+
+
+    const open =
+        typeof force === "boolean"
+            ? force
+            : !els.sidebar.classList.contains("open");
+
+
+    els.sidebar.classList.toggle(
+        "open",
+        open
+    );
+
+
+    els.sidebarBackdrop.classList.toggle(
+        "show",
+        open
+    );
+
+}
+
+
+/* =========================================================
+   SEND STATE
+========================================================= */
+
+function setSendLoading(loading){
+
+    els.sendBtn.disabled =
+        loading;
+
+    els.sendBtn.classList.toggle(
+        "loading",
+        loading
+    );
+
+    els.sendBtn.textContent =
+        loading
+            ? "…"
+            : "↑";
+
+}
+
+
+/* =========================================================
+   SCROLL
+========================================================= */
+
+function scrollBottom(){
+
+    requestAnimationFrame(
+        () => {
+
+            els.chat.scrollTop =
+                els.chat.scrollHeight;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CLIPBOARD
+========================================================= */
+
+async function copyText(text){
+
+    try{
+
+        if(
+            navigator.clipboard &&
+            typeof navigator.clipboard.writeText === "function"
+        ){
+
+            await navigator.clipboard.writeText(
+                text
+            );
+
+            return true;
+
+        }
+
+    }catch{}
+
+
+    try{
+
+        const textarea =
+            document.createElement("textarea");
+
+        textarea.value =
+            text;
+
+        textarea.style.position =
+            "fixed";
+
+        textarea.style.opacity =
+            "0";
+
+        textarea.style.pointerEvents =
+            "none";
+
+        document.body.appendChild(
+            textarea
+        );
+
+        textarea.focus();
+        textarea.select();
+
+        const success =
+            document.execCommand(
+                "copy"
+            );
+
+        textarea.remove();
+
+        return success;
+
+    }catch{
+
+        return false;
+
+    }
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
 
 function showToast(text){
 
-    const toast =
-        document.getElementById("toast");
+    clearTimeout(
+        state.toastTimer
+    );
 
-    toast.textContent=text;
 
-    toast.classList.add("show");
+    els.toast.textContent =
+        text;
 
-    clearTimeout(toastTimer);
 
-    toastTimer=setTimeout(()=>{
-        toast.classList.remove("show");
-    },2200);
+    els.toast.classList.add(
+        "show"
+    );
+
+
+    state.toastTimer =
+        setTimeout(
+            () => {
+
+                els.toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
 
 }
 
-/* =========================================
-   FIRST RUN
-========================================= */
 
-if(!apiKey){
+/* =========================================================
+   MOBILE KEYBOARD / VIEWPORT
+========================================================= */
 
-    setTimeout(()=>{
-        openApiModal();
-    },700);
+if(
+    window.visualViewport
+){
+
+    window.visualViewport.addEventListener(
+        "resize",
+        () => {
+
+            /*
+             * Helps mobile browsers keep the
+             * composer visible while keyboard
+             * is open.
+             */
+
+            if(
+                document.activeElement ===
+                els.prompt
+            ){
+
+                requestAnimationFrame(
+                    () => {
+
+                        els.chat.scrollTop =
+                            els.chat.scrollHeight;
+
+                    }
+                );
+
+            }
+
+        }
+    );
 
 }
 
-changeMode("General");
 
-</script></body>
-      </html>
+/* =========================================================
+   START
+========================================================= */
+
+init();
+
+</script>
+
+</body>
+    </html>
