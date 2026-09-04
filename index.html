@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="ban">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barble barb - AI Rep Tracker</title>
+  <title>Barble barb - Pangetang Angkatan AI</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -47,7 +47,7 @@
       text-shadow: 0 0 15px rgba(74, 222, 128, 0.8);
     }
 
-    /* Mirror canvas agar gerakan terasa alami seperti cermin */
+    /* Mirror canvas mangda kacingak sakadi cermin */
     .mirror {
       transform: scaleX(-1);
     }
@@ -65,14 +65,14 @@
         <h1 class="text-xl md:text-2xl font-black tracking-wider uppercase bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-teal-200 to-cyan-400">
           Barble barb
         </h1>
-        <p class="text-xs text-slate-400 font-medium tracking-widest uppercase">Smart AI Barbell Tracker</p>
+        <p class="text-xs text-slate-400 font-medium tracking-widest uppercase">Pangetang Angkatan Barbel AI Canggih</p>
       </div>
     </div>
 
     <!-- Status Badge -->
     <div id="statusBadge" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs font-semibold text-slate-400">
       <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" id="statusDot"></span>
-      <span id="statusText">Kamera Siap</span>
+      <span id="statusText">Kamera Siyaga</span>
     </div>
   </header>
 
@@ -82,7 +82,7 @@
     <!-- Video / AI Tracker Screen -->
     <div class="lg:col-span-2 relative w-full aspect-[4/3] md:aspect-[16/10] bg-slate-950 rounded-3xl overflow-hidden border border-slate-800/80 shadow-2xl shadow-emerald-950/20 flex items-center justify-center">
       
-      <!-- Video Input (JANGAN display:none / hidden agar video frame tetap berjalan di browser) -->
+      <!-- Video Input (Hidden offscreen) -->
       <video id="webcam" playsinline muted autoplay class="absolute opacity-0 pointer-events-none -z-50 w-10 h-10"></video>
       
       <!-- Canvas Render Output -->
@@ -93,14 +93,14 @@
 
       <!-- Live Stage HUD (Up / Down Indicator) -->
       <div class="absolute top-4 left-4 backdrop-blur-md bg-slate-900/80 border border-slate-700/60 px-4 py-2 rounded-2xl flex items-center gap-3 z-10 shadow-lg">
-        <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Posisi:</div>
-        <div id="stageIndicator" class="text-sm font-black text-amber-400 tracking-wider">SIAP</div>
+        <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Kahanan:</div>
+        <div id="stageIndicator" class="text-sm font-black text-amber-400 tracking-wider">SIYAGA</div>
       </div>
 
       <!-- Body Detection Status Indicator -->
       <div id="bodyDetectBadge" class="absolute bottom-4 left-4 backdrop-blur-md bg-slate-900/85 border border-slate-700/60 px-3.5 py-1.5 rounded-xl flex items-center gap-2 text-xs font-bold z-10 shadow-lg text-slate-400">
         <span id="bodyDetectDot" class="w-2 h-2 rounded-full bg-slate-500"></span>
-        <span id="bodyDetectText">Mencari Badan...</span>
+        <span id="bodyDetectText">Ngrereh Awak...</span>
       </div>
 
       <!-- Angle HUD -->
@@ -109,16 +109,16 @@
         <span id="angleValue" class="text-sm font-mono font-bold text-teal-300">0°</span>
       </div>
 
-      <!-- Overlay Belum Aktif -->
+      <!-- Overlay Durung Aktif -->
       <div id="startPrompt" class="absolute inset-0 bg-slate-950/90 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center z-20">
         <div class="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-4 text-emerald-400">
           <i data-lucide="video" class="w-8 h-8"></i>
         </div>
-        <h3 class="text-lg font-bold mb-2">Izinkan Akses Kamera</h3>
-        <p class="text-slate-400 text-sm max-w-sm mb-6">Posisikan badanmu agar terlihat jelas di kamera. AI akan menggambar rangka tulang tubuh secara live.</p>
+        <h3 class="text-lg font-bold mb-2">Lugayang Akses Kamera</h3>
+        <p class="text-slate-400 text-sm max-w-sm mb-6">Genahang ragané mangda kacingak tatas ring kamera. AI pacang ngripta balung ragané sacara langsung.</p>
         <button id="startBtn" class="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-extrabold hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-emerald-500/30 flex items-center gap-2 cursor-pointer">
           <i data-lucide="play" class="w-5 h-5 fill-slate-950"></i>
-          Mulai Latihan
+          Ngawit Latihan
         </button>
       </div>
     </div>
@@ -130,7 +130,7 @@
       <div class="relative overflow-hidden bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-6 shadow-xl text-center">
         <div class="absolute -top-12 -right-12 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
         
-        <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Total Barbel Angkatan</span>
+        <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Akéh Angkatan Barbel</span>
         
         <div class="my-4 flex items-center justify-center">
           <span id="repCounter" class="text-7xl md:text-8xl font-black tracking-tight text-white transition-all">0</span>
@@ -140,14 +140,14 @@
         <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden mb-2">
           <div id="progressBar" class="bg-gradient-to-r from-teal-400 to-emerald-400 h-2.5 rounded-full transition-all duration-150" style="width: 0%"></div>
         </div>
-        <p id="feedbackText" class="text-xs font-semibold text-slate-400 mt-2">Berdiri di depan kamera & tekuk siku</p>
+        <p id="feedbackText" class="text-xs font-semibold text-slate-400 mt-2">Ngadeg ring arep kamera & lilitang sikut</p>
       </div>
 
       <!-- Controls -->
       <div class="bg-slate-900/60 border border-slate-800/80 backdrop-blur-md rounded-2xl p-4 flex gap-3">
         <button id="resetBtn" class="flex-1 py-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 font-bold transition flex items-center justify-center gap-2 border border-slate-700/50 active:scale-95 cursor-pointer">
           <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-          Reset
+          Waliang (Reset)
         </button>
         <button id="toggleCameraBtn" class="px-4 py-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 font-bold transition border border-slate-700/50 active:scale-95 cursor-pointer">
           <i data-lucide="camera" id="toggleCamIcon" class="w-4 h-4"></i>
@@ -157,7 +157,7 @@
       <!-- Tips Box -->
       <div class="p-4 rounded-2xl bg-emerald-950/20 border border-emerald-800/30 text-xs text-emerald-300/80 flex gap-3 items-start">
         <i data-lucide="info" class="w-5 h-5 shrink-0 text-emerald-400"></i>
-        <p>Tips: Garis hijau adalah rangka tulangmu. Saat mengangkat barbel, lengan aktif akan menyala kuning dan menghitung repetisi.</p>
+        <p>Pituduh: Garis gadang punika balung ragané. Rikala ngangkat barbel, kakalih lengen pacang masunar kuning tur ngetang repetisi sacara otomatis.</p>
       </div>
 
     </div>
@@ -173,7 +173,7 @@
 
     const videoElement = document.getElementById('webcam');
     const canvasElement = document.getElementById('outputCanvas');
-    const canvasCtx = canvasElement.getContext('2d');
+    const canvasCtx = canvasElement.getContext('2d', { alpha: false });
     
     const repCounter = document.getElementById('repCounter');
     const stageIndicator = document.getElementById('stageIndicator');
@@ -186,7 +186,6 @@
     const startPrompt = document.getElementById('startPrompt');
     const resetBtn = document.getElementById('resetBtn');
     const toggleCameraBtn = document.getElementById('toggleCameraBtn');
-    const toggleCamIcon = document.getElementById('toggleCamIcon');
     const statusBadge = document.getElementById('statusBadge');
     const statusText = document.getElementById('statusText');
     const statusDot = document.getElementById('statusDot');
@@ -199,6 +198,7 @@
     let stage = "down"; 
     let camera = null;
     let isTracking = false;
+    let isProcessing = false; // Mencegah lag / frame-queue backlog
 
     // Web Audio Synthesizer Beep
     function playBeep() {
@@ -216,7 +216,7 @@
         osc.start();
         osc.stop(audioCtx.currentTime + 0.2);
       } catch (e) {
-        console.log("Audio permission needed");
+        console.log("Akses audio kaperluang");
       }
     }
 
@@ -246,150 +246,152 @@
       }, 800);
     }
 
-    // Fungsi menggambar garis tulang khusus lengan yang aktif
+    // Fungsi nggambar garis balung lengen sané nyunar kuning (Glowing Yellow Arm)
     function drawActiveArmBone(p1, p2, p3, width, height) {
       canvasCtx.save();
-      canvasCtx.strokeStyle = '#facc15'; // Kuning terang menyala
+      canvasCtx.strokeStyle = '#facc15'; // Kuning galang
       canvasCtx.lineWidth = 6;
       canvasCtx.lineCap = 'round';
       canvasCtx.shadowColor = '#fde047';
-      canvasCtx.shadowBlur = 15;
+      canvasCtx.shadowBlur = 12;
 
-      // Garis Bahu -> Siku -> Pergelangan
+      // Garis Bahu -> Sikut -> Pagelangan
       canvasCtx.beginPath();
       canvasCtx.moveTo(p1.x * width, p1.y * height);
       canvasCtx.lineTo(p2.x * width, p2.y * height);
       canvasCtx.lineTo(p3.x * width, p3.y * height);
       canvasCtx.stroke();
 
-      // Titik lingkaran pada sendi aktif
+      // Bunderan ring sendi
       [p1, p2, p3].forEach(p => {
         canvasCtx.beginPath();
-        canvasCtx.arc(p.x * width, p.y * height, 7, 0, 2 * Math.PI);
+        canvasCtx.arc(p.x * width, p.y * height, 6, 0, 2 * Math.PI);
         canvasCtx.fillStyle = '#ffffff';
         canvasCtx.fill();
         canvasCtx.strokeStyle = '#eab308';
-        canvasCtx.lineWidth = 3;
+        canvasCtx.lineWidth = 2.5;
         canvasCtx.stroke();
       });
 
       canvasCtx.restore();
     }
 
-    // Callback saat AI MediaPipe mendeteksi pose
+    // Callback ritatkala MediaPipe Pose ngasilang deteksi
     function onResults(results) {
-      // Pastikan ukuran canvas sesuai frame video jika videoWidth sudah ada
-      if (videoElement.videoWidth && canvasElement.width !== videoElement.videoWidth) {
+      if (!canvasElement.width && videoElement.videoWidth) {
         canvasElement.width = videoElement.videoWidth;
         canvasElement.height = videoElement.videoHeight;
       }
 
       canvasCtx.save();
-      canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
       
-      // Gambar video feed ke canvas
+      // Gambar video feed ka canvas
       if (results.image) {
         canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
       }
 
       if (results.poseLandmarks && results.poseLandmarks.length > 0) {
-        // Update status indikator deteksi badan
         bodyDetectDot.className = "w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping";
-        bodyDetectText.innerText = "Badan Terdeteksi";
+        bodyDetectText.innerText = "Awak Katemu";
         bodyDetectBadge.className = "absolute bottom-4 left-4 backdrop-blur-md bg-emerald-950/80 border border-emerald-500/50 px-3.5 py-1.5 rounded-xl flex items-center gap-2 text-xs font-bold z-10 shadow-lg text-emerald-300";
 
         const connections = window.POSE_CONNECTIONS || (window.Pose && window.Pose.POSE_CONNECTIONS);
 
-        // 1. Gambar seluruh struktur tulang tubuh (Bone Tracking)
+        // 1. Gambar rangka tulang umum (Garis Gadang / Hijau Neon)
         if (connections && window.drawConnectors) {
           drawConnectors(canvasCtx, results.poseLandmarks, connections, {
-            color: 'rgba(52, 211, 153, 0.75)', // Garis hijau neon
-            lineWidth: 3
+            color: 'rgba(52, 211, 153, 0.65)',
+            lineWidth: 2.5
           });
         }
 
-        // 2. Gambar titik-titik persendian tubuh (Joint Points)
+        // 2. Gambar titik sendi
         if (window.drawLandmarks) {
           drawLandmarks(canvasCtx, results.poseLandmarks, {
-            color: '#06b6d4',      // Cyan
+            color: '#06b6d4',
             fillColor: '#0f172a',
-            lineWidth: 2,
-            radius: 3.5
+            lineWidth: 1.5,
+            radius: 3
           });
         }
 
         const landmarks = results.poseLandmarks;
+        const w = canvasElement.width;
+        const h = canvasElement.height;
 
-        // Ambil sendi lengan kanan (12: Bahu, 14: Siku, 16: Pergelangan)
-        // dan lengan kiri (11: Bahu, 13: Siku, 15: Pergelangan)
+        // Koordinat Lengan Kanan (12: Bahu, 14: Siku, 16: Pergelangan)
         const rightShoulder = landmarks[12];
         const rightElbow = landmarks[14];
         const rightWrist = landmarks[16];
 
+        // Koordinat Lengan Kiri (11: Bahu, 13: Siku, 15: Pergelangan)
         const leftShoulder = landmarks[11];
         const leftElbow = landmarks[13];
         const leftWrist = landmarks[15];
 
-        let activeAngle = null;
         const rightVis = ((rightShoulder?.visibility || 0) + (rightElbow?.visibility || 0) + (rightWrist?.visibility || 0)) / 3;
         const leftVis = ((leftShoulder?.visibility || 0) + (leftElbow?.visibility || 0) + (leftWrist?.visibility || 0)) / 3;
 
-        // Gunakan threshold 0.5 agar lebih responsif dalam berbagai kondisi cahaya
-        if (rightVis > leftVis && rightVis > 0.5) {
-          activeAngle = calculateAngle(rightShoulder, rightElbow, rightWrist);
-          // Highlight tulang lengan kanan yang sedang aktif
-          drawActiveArmBone(rightShoulder, rightElbow, rightWrist, canvasElement.width, canvasElement.height);
-        } else if (leftVis > 0.5) {
-          activeAngle = calculateAngle(leftShoulder, leftElbow, leftWrist);
-          // Highlight tulang lengan kiri yang sedang aktif
-          drawActiveArmBone(leftShoulder, leftElbow, leftWrist, canvasElement.width, canvasElement.height);
+        const activeAngles = [];
+
+        // Deteksi Tangan Tengawan (Kanan) - Gambar Kuning yening aktif
+        if (rightVis > 0.45) {
+          drawActiveArmBone(rightShoulder, rightElbow, rightWrist, w, h);
+          activeAngles.push(calculateAngle(rightShoulder, rightElbow, rightWrist));
         }
 
-        if (activeAngle !== null) {
-          const currentAngle = Math.round(activeAngle);
+        // Deteksi Tangan Kiwa (Kiri) - Gambar Kuning yening aktif
+        if (leftVis > 0.45) {
+          drawActiveArmBone(leftShoulder, leftElbow, leftWrist, w, h);
+          activeAngles.push(calculateAngle(leftShoulder, leftElbow, leftWrist));
+        }
+
+        // Yening wenten tangan sané aktif (kiri, kanan, utawi kakalihne)
+        if (activeAngles.length > 0) {
+          // Itung rata-rata sudut kakalih tangan mangda presisi
+          const currentAngle = Math.round(activeAngles.reduce((a, b) => a + b, 0) / activeAngles.length);
           angleValue.innerText = `${currentAngle}°`;
 
-          // Hitung persentase progress bar (160° = 0%, 35° = 100%)
+          // Hitung persentase gauge (160° = 0%, 35° = 100%)
           const progress = Math.min(Math.max((160 - currentAngle) / (160 - 35) * 100, 0), 100);
           progressBar.style.width = `${progress}%`;
 
           // State Machine Repetisi Barbel
-          if (currentAngle > 150) {
+          if (currentAngle > 145) {
             stage = "down";
-            stageIndicator.innerText = "LURUS (TURUN)";
+            stageIndicator.innerText = "LURUS (TUWUN)";
             stageIndicator.className = "text-sm font-black text-cyan-400 tracking-wider";
-            feedbackText.innerText = "Angkat beban ke atas!";
+            feedbackText.innerText = "Angkat abotan nuju duwur!";
           }
           
-          if (currentAngle < 45 && stage === "down") {
+          if (currentAngle < 50 && stage === "down") {
             stage = "up";
             count += 1;
             repCounter.innerText = count;
-            stageIndicator.innerText = "TERANGKAT (NAIK)";
+            stageIndicator.innerText = "KAANGKAT (MENEK)";
             stageIndicator.className = "text-sm font-black text-emerald-400 tracking-wider";
-            feedbackText.innerText = "Bagus! Turunkan perlahan.";
+            feedbackText.innerText = "Becik pisan! Tuwunang alon-alon.";
             
             playBeep();
             triggerRepAnimation();
           }
         }
       } else {
-        // Jika badan belum terdeteksi di frame
         bodyDetectDot.className = "w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse";
-        bodyDetectText.innerText = "Mencari Badan...";
+        bodyDetectText.innerText = "Ngrereh Awak...";
         bodyDetectBadge.className = "absolute bottom-4 left-4 backdrop-blur-md bg-slate-900/85 border border-slate-700/60 px-3.5 py-1.5 rounded-xl flex items-center gap-2 text-xs font-bold z-10 shadow-lg text-slate-400";
       }
 
       canvasCtx.restore();
     }
 
-    // Inisialisasi MediaPipe Pose
+    // Inisialisasi MediaPipe Pose (Model Lite = 0, sanget ngirangin lag)
     const pose = new Pose({
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
     });
 
     pose.setOptions({
-      modelComplexity: 1,
+      modelComplexity: 0, // Lite (paling enteng, anti macet/lag)
       smoothLandmarks: true,
       enableSegmentation: false,
       minDetectionConfidence: 0.5,
@@ -398,46 +400,51 @@
 
     pose.onResults(onResults);
 
-    // Mulai Kamera
+    // Ngawit Kamera
     async function startCamera() {
       try {
         startPrompt.classList.add('hidden');
         statusBadge.className = "flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-950/60 border border-emerald-800 text-xs font-semibold text-emerald-400";
         statusDot.className = "w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping";
-        statusText.innerText = "Tracking Aktif";
+        statusText.innerText = "Pelacakan Mamargi";
 
         if (!camera) {
           camera = new Camera(videoElement, {
             onFrame: async () => {
-              if (videoElement.readyState >= 2) {
+              // Frame drop check mangda nenten lag
+              if (!isProcessing && videoElement.readyState >= 2) {
+                isProcessing = true;
                 await pose.send({ image: videoElement });
+                isProcessing = false;
               }
             },
-            width: 1280,
-            height: 720
+            width: 854,
+            height: 480
           });
         }
 
         await camera.start();
+        canvasElement.width = 854;
+        canvasElement.height = 480;
         isTracking = true;
       } catch (err) {
-        console.error("Gagal membuka kamera:", err);
-        alert("Gagal membuka kamera: " + err.message + "\n\nCatatan: Pastikan izin kamera telah diberikan di browser. Jika membukanya secara lokal, jalankan lewat localhost (misal: ekstensi Live Server di VS Code) bukan direct file://.");
+        console.error("Iwang ngungkab kamera:", err);
+        alert("Iwang ngungkab kamera: " + err.message + "\n\nCatetan: Pastikayang izin kamera sampun kalugayang ring browser.");
         startPrompt.classList.remove('hidden');
       }
     }
 
     startBtn.addEventListener('click', startCamera);
 
-    // Reset Hitungan
+    // Waliang Itungan (Reset)
     resetBtn.addEventListener('click', () => {
       count = 0;
       repCounter.innerText = 0;
       progressBar.style.width = "0%";
-      feedbackText.innerText = "Hitungan di-reset. Siap angkat lagi!";
+      feedbackText.innerText = "Wilangan sampun kawaliang. Siyaga ngangkat malih!";
     });
 
-    // Toggle Matikan/Nyalakan Kamera
+    // Pilihan Kamera On/Off
     toggleCameraBtn.addEventListener('click', async () => {
       if (isTracking && camera) {
         await camera.stop();
@@ -445,7 +452,7 @@
         startPrompt.classList.remove('hidden');
         statusBadge.className = "flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs font-semibold text-slate-400";
         statusDot.className = "w-2.5 h-2.5 rounded-full bg-amber-500";
-        statusText.innerText = "Kamera Dijeda";
+        statusText.innerText = "Kamera Kaandeg";
       } else {
         startCamera();
       }
