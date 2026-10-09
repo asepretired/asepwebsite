@@ -1,462 +1,1234 @@
 <!DOCTYPE html>
-<html lang="ban">
+<html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barble barb - Pangetang Angkatan AI</title>
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  
-  <!-- MediaPipe Pose & Camera Utils CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asep Am prem</title>
+<style>
+  /* ============================================================
+     ASEP AM PREM — iOS 1 Authentic + Credit System
+     Credit: Asep.html
+     ============================================================ */
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html, body { height:100%; }
 
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap');
-    body {
-      font-family: 'Outfit', sans-serif;
-      background: radial-gradient(circle at top, #111827, #030712);
-    }
-    
-    /* Animasi Pop Hitungan Repetisi */
-    @keyframes repPop {
-      0% { transform: scale(1); filter: drop-shadow(0 0 0px #22c55e); }
-      50% { transform: scale(1.35); filter: drop-shadow(0 0 25px #22c55e); }
-      100% { transform: scale(1); filter: drop-shadow(0 0 0px #22c55e); }
-    }
-    .rep-animate {
-      animation: repPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background:
+      radial-gradient(ellipse at center, rgba(60,60,60,0.35) 0%, rgba(0,0,0,0.85) 100%),
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.08) 0px, rgba(0,0,0,0.08) 1px, transparent 1px, transparent 4px),
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.08) 0px, rgba(0,0,0,0.08) 1px, transparent 1px, transparent 4px),
+      linear-gradient(180deg, #3a3a3a 0%, #1a1a1a 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #333;
+    overflow-x: hidden;
+  }
 
-    /* Floating +1 Text */
-    @keyframes floatUp {
-      0% { opacity: 1; transform: translateY(0) scale(0.8); }
-      100% { opacity: 0; transform: translateY(-70px) scale(1.4); }
-    }
-    .floating-plus {
-      position: absolute;
-      font-weight: 900;
-      color: #4ade80;
-      animation: floatUp 0.8s ease-out forwards;
-      pointer-events: none;
-      z-index: 50;
-      text-shadow: 0 0 15px rgba(74, 222, 128, 0.8);
-    }
+  /* ===== CARD ===== */
+  .ios-window {
+    width: 100%; max-width: 430px;
+    background: #c8c8c8;
+    border-radius: 14px;
+    border: 1px solid #000;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.35) inset,
+      0 24px 70px rgba(0,0,0,0.85),
+      0 2px 0 rgba(255,255,255,0.4) inset,
+      0 0 0 4px rgba(0,0,0,0.35);
+    overflow: hidden;
+    position: relative;
+    animation: windowIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+  }
+  @keyframes windowIn {
+    0%   { opacity: 0; transform: translateY(40px) scale(0.92); filter: blur(6px); }
+    60%  { opacity: 1; filter: blur(0); }
+    100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+  }
+  .ios-window.leaving { opacity: 0; transform: translateY(-25px) scale(0.95); filter: blur(4px); pointer-events: none; }
 
-    /* Mirror canvas mangda kacingak sakadi cermin */
-    .mirror {
-      transform: scaleX(-1);
-    }
-  </style>
+  /* ===== TITLE BAR ===== */
+  .ios-titlebar {
+    height: 46px;
+    background: linear-gradient(180deg, #d5d5d5 0%, #a8a8a8 45%, #7c7c7c 50%, #6a6a6a 51%, #8d8d8d 100%);
+    border-bottom: 1px solid #000;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; box-shadow: 0 1px 0 rgba(255,255,255,0.55) inset; overflow: hidden;
+  }
+  .ios-titlebar::before {
+    content:""; position:absolute; top:0; left:0; right:0; height:50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.02)); pointer-events:none;
+  }
+  .ios-titlebar::after {
+    content:""; position:absolute; bottom:0; left:0; right:0; height:1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+  }
+  .ios-titlebar h1 {
+    font-size: 17px; font-weight: bold; color: #fff;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.75), 0 1px 0 rgba(255,255,255,0.2);
+    letter-spacing: 0.4px; position: relative; z-index: 1;
+    animation: titleGlow 3.5s ease-in-out infinite;
+  }
+  @keyframes titleGlow {
+    0%, 100% { text-shadow: 0 -1px 0 rgba(0,0,0,0.75), 0 1px 0 rgba(255,255,255,0.2); }
+    50%      { text-shadow: 0 -1px 0 rgba(0,0,0,0.75), 0 1px 0 rgba(255,255,255,0.2), 0 0 12px rgba(255,255,255,0.35); }
+  }
+
+  /* ===== TABS ===== */
+  .ios-tabs { display: flex; background: linear-gradient(180deg, #b0b0b0 0%, #8c8c8c 100%); border-bottom: 1px solid #000; box-shadow: 0 1px 0 rgba(255,255,255,0.5) inset; }
+  .ios-tab {
+    flex: 1; text-align: center; padding: 10px 0; font-size: 12px; font-weight: bold;
+    color: #f0f0f0; text-shadow: 0 -1px 0 rgba(0,0,0,0.65);
+    cursor: pointer; border-right: 1px solid rgba(0,0,0,0.4);
+    background: linear-gradient(180deg, #b8b8b8 0%, #909090 50%, #7a7a7a 100%);
+    position: relative; overflow: hidden;
+    transition: color 0.3s ease;
+    -webkit-user-select: none; user-select: none;
+  }
+  .ios-tab:last-child { border-right: none; }
+  .ios-tab::before { content:""; position:absolute; top:0; left:0; right:0; height:50%; background: linear-gradient(180deg, rgba(255,255,255,0.3), transparent); pointer-events:none; transition: opacity 0.3s ease; }
+  .ios-tab.active { background: linear-gradient(180deg, #6e6e6e 0%, #484848 50%, #3a3a3a 100%); color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.55) inset; }
+  .ios-tab.active::before { opacity: 0.15; }
+
+  /* ===== CREDIT BAR ===== */
+  .credit-bar {
+    display: flex; align-items: center; gap: 12px;
+    padding: 11px 16px;
+    background: linear-gradient(180deg, #2b2b2b 0%, #1a1a1a 50%, #0f0f0f 100%);
+    border-bottom: 1px solid #000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5) inset, 0 1px 0 rgba(255,255,255,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .credit-bar::before {
+    content:""; position:absolute; inset:0;
+    background: linear-gradient(90deg, transparent, rgba(255,215,0,0.06), transparent);
+    animation: creditSheen 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes creditSheen {
+    0%, 100% { transform: translateX(-100%); }
+    50%      { transform: translateX(100%); }
+  }
+  .credit-icon {
+    width: 34px; height: 34px; border-radius: 50%;
+    background:
+      radial-gradient(circle at 35% 30%, #fff7b0 0%, #ffd700 35%, #b8860b 75%, #6b5000 100%);
+    border: 1px solid #4a3500;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 -6px 10px rgba(0,0,0,0.35) inset, 0 2px 5px rgba(0,0,0,0.5);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 900; color: #6b5000;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    flex-shrink: 0;
+    animation: coinSpin 5s ease-in-out infinite;
+    transform-style: preserve-3d;
+  }
+  @keyframes coinSpin {
+    0%, 100% { transform: rotateY(0deg); }
+    50%      { transform: rotateY(180deg); }
+  }
+  .credit-info { flex: 1; min-width: 0; }
+  .credit-label {
+    font-size: 9.5px; color: #ffd700; letter-spacing: 3px; font-weight: bold;
+    text-shadow: 0 0 6px rgba(255,215,0,0.7);
+  }
+  .credit-value {
+    font-size: 20px; font-weight: 900; color: #fff;
+    font-family: "Courier New", monospace;
+    text-shadow: 0 0 12px rgba(255,215,0,0.55), 0 -1px 0 rgba(0,0,0,0.9);
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+    transition: color 0.3s ease;
+  }
+  .credit-value.bump { animation: creditBump 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  @keyframes creditBump {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35); color: #ffe066; text-shadow: 0 0 25px #ffd700; }
+    100% { transform: scale(1); }
+  }
+
+  /* Floating credit delta */
+  .credit-float {
+    position: absolute;
+    right: 20px;
+    font-size: 16px;
+    font-weight: 900;
+    pointer-events: none;
+    animation: creditFloat 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    text-shadow: 0 0 10px currentColor;
+    z-index: 5;
+  }
+  .credit-float.plus { color: #4bff6b; }
+  .credit-float.minus { color: #ff5050; }
+  @keyframes creditFloat {
+    0%   { transform: translateY(0) scale(0.5); opacity: 0; }
+    20%  { transform: translateY(-15px) scale(1.15); opacity: 1; }
+    100% { transform: translateY(-50px) scale(1); opacity: 0; }
+  }
+
+  /* ===== CONTENT ===== */
+  .ios-content {
+    background: linear-gradient(180deg, #dcdcdc 0%, #c4c4c4 100%);
+    padding: 22px 18px 24px;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.7) inset;
+    position: relative;
+  }
+  .ios-content::before {
+    content:""; position:absolute; inset:0;
+    background: repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 3px);
+    pointer-events:none; opacity: 0.5;
+  }
+  .ios-content > * { position: relative; z-index: 1; }
+
+  /* ===== APP ICON ===== */
+  .app-icon {
+    width: 78px; height: 78px; margin: 0 auto 14px; border-radius: 18px;
+    background:
+      radial-gradient(circle at 50% 5%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 45%),
+      linear-gradient(180deg, #7cc4ff 0%, #2b7de9 45%, #0d4c9e 52%, #3a8cf0 100%);
+    border: 1px solid #003b7a;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset, 0 -10px 16px rgba(0,0,0,0.3) inset, 0 6px 12px rgba(0,0,0,0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 38px; font-weight: bold; color: #fff;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.55);
+    position: relative; overflow: hidden;
+    animation: iconIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+  }
+  .app-icon::after {
+    content:""; position:absolute; top:0; left:0; right:0; height:52%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.02));
+    border-radius: 18px 18px 50% 50%; pointer-events:none;
+  }
+  @keyframes iconIn {
+    0%   { opacity: 0; transform: scale(0.4) rotate(-25deg); }
+    60%  { opacity: 1; transform: scale(1.08) rotate(4deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0); }
+  }
+  .app-icon.idle { animation: iconIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both, floatIcon 4s ease-in-out 1.2s infinite; }
+  @keyframes floatIcon {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50%      { transform: translateY(-4px) rotate(-1deg); }
+  }
+
+  .subtitle {
+    text-align:center; font-size: 12px; color: #555;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.85);
+    margin-bottom: 20px; letter-spacing: 0.6px; font-weight: 600;
+    animation: fadeSlideDown 0.6s ease 0.25s both;
+  }
+  @keyframes fadeSlideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeSlideUp   { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn        { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes popIn {
+    0%   { opacity: 0; transform: scale(0.85); }
+    60%  { opacity: 1; transform: scale(1.04); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  /* ===== GROUP ===== */
+  .ios-group {
+    background: #fff; border: 1px solid #8a8a8a; border-radius: 10px;
+    overflow: hidden; margin-bottom: 18px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.28), 0 1px 0 rgba(255,255,255,0.8) inset;
+    animation: fadeSlideUp 0.5s ease 0.3s both;
+    transition: box-shadow 0.3s ease;
+  }
+  .ios-group:focus-within { box-shadow: 0 1px 3px rgba(0,0,0,0.28), 0 0 0 3px rgba(43,125,233,0.35); }
+  .ios-row {
+    display: flex; align-items: center; padding: 11px 12px;
+    border-bottom: 1px solid #cfcfcf;
+    background: linear-gradient(180deg, #ffffff 0%, #f2f2f2 100%);
+    position: relative; transition: background 0.25s ease;
+  }
+  .ios-row:last-child { border-bottom: none; }
+  .ios-row:focus-within { background: linear-gradient(180deg, #eef6ff 0%, #dbeaff 100%); }
+  .ios-row label {
+    font-size: 13px; font-weight: bold; color: #444; width: 92px;
+    text-shadow: 0 1px 0 #fff; flex-shrink: 0; transition: color 0.25s ease;
+  }
+  .ios-row:focus-within label { color: #1258c9; }
+  .ios-row input {
+    flex: 1; border: none; outline: none; background: transparent;
+    font-size: 14px; color: #222; font-family: inherit; padding: 4px 0;
+  }
+  .ios-row input::placeholder { color: #a8a8a8; }
+
+  /* ===== BUTTONS ===== */
+  .btn {
+    display: block; width: 100%; padding: 13px 0;
+    font-size: 15px; font-weight: bold; font-family: inherit;
+    color: #fff; text-shadow: 0 -1px 0 rgba(0,0,0,0.55);
+    border: 1px solid #00336b; border-radius: 10px;
+    background: linear-gradient(180deg, #7ab8ff 0%, #2b7de9 48%, #1258c9 52%, #3a8cf0 100%);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.65) inset, 0 -12px 16px rgba(0,0,0,0.18) inset, 0 2px 5px rgba(0,0,0,0.45);
+    cursor: pointer; position: relative; overflow: hidden; letter-spacing: 0.35px;
+    transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.15s ease, box-shadow 0.25s ease;
+    animation: fadeSlideUp 0.5s ease 0.4s both;
+    -webkit-user-select: none; user-select: none;
+  }
+  .btn::before {
+    content:""; position:absolute; top:0; left:0; right:0; height:50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.65), rgba(255,255,255,0.03));
+    border-radius: 10px 10px 45% 45%; pointer-events:none;
+  }
+  .btn::after {
+    content:""; position:absolute; top:0; left:-120%; width: 60%; height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.6), transparent);
+    transform: skewX(-20deg); transition: left 0.7s cubic-bezier(0.16, 1, 0.3, 1); pointer-events:none;
+  }
+  .btn:hover::after { left: 130%; }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 1px 0 rgba(255,255,255,0.65) inset, 0 -12px 16px rgba(0,0,0,0.18) inset, 0 5px 10px rgba(0,0,0,0.5); }
+  .btn:active { transform: translateY(1px) scale(0.985); filter: brightness(0.85); }
+  .btn:disabled { opacity: 0.6; cursor: not-allowed; filter: grayscale(0.35); transform: none; }
+  .btn.gray {
+    background: linear-gradient(180deg, #fafafa 0%, #d4d4d4 48%, #b6b6b6 52%, #dedede 100%);
+    border-color: #7a7a7a; color: #333; text-shadow: 0 1px 0 rgba(255,255,255,0.95);
+  }
+  .btn.green { background: linear-gradient(180deg, #a4ea7e 0%, #4bb32b 48%, #2e8c14 52%, #62c93f 100%); border-color: #1d5c0a; }
+  .btn.red { background: linear-gradient(180deg, #ff9a9a 0%, #e02b2b 48%, #b81e1e 52%, #ef4545 100%); border-color: #6b0f0f; }
+  .btn.gold {
+    background: linear-gradient(180deg, #ffe27a 0%, #ffb800 45%, #cc8800 55%, #ffd54a 100%);
+    border-color: #7a5200; color: #4a3000; text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+  }
+
+  /* ===== LOG ===== */
+  .ios-log {
+    background: #0a0a0a; border: 1px solid #000; border-radius: 10px;
+    padding: 11px; font-family: "Courier New", monospace; font-size: 11px;
+    color: #33ff66; height: 175px; overflow-y: auto;
+    white-space: pre-wrap; word-break: break-all;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.7) inset, 0 1px 0 rgba(255,255,255,0.15);
+    line-height: 1.45; text-shadow: 0 0 5px rgba(51,255,102,0.55);
+    animation: fadeIn 0.6s ease 0.5s both; position: relative;
+  }
+  .ios-log::before {
+    content:""; position:absolute; inset:0;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0px, rgba(0,0,0,0.18) 1px, transparent 1px, transparent 3px);
+    pointer-events:none; opacity: 0.6; border-radius: 10px;
+  }
+  .ios-log::-webkit-scrollbar { width: 6px; }
+  .ios-log::-webkit-scrollbar-thumb { background: #2a4a2a; border-radius: 3px; }
+  .log-line { animation: logAppear 0.35s ease both; }
+  @keyframes logAppear { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: translateX(0); } }
+
+  /* ===== STEPS ===== */
+  .steps { display: flex; justify-content: center; gap: 10px; margin-bottom: 16px; animation: fadeSlideDown 0.5s ease 0.2s both; }
+  .step-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: #9a9a9a; border: 1px solid #666;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.75) inset, 0 1px 2px rgba(0,0,0,0.3);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .step-dot.active {
+    background: radial-gradient(circle at 30% 30%, #a5d0ff, #2b7de9 60%, #1258c9);
+    border-color: #00336b;
+    box-shadow: 0 0 10px #2b7de9, 0 0 0 3px rgba(43,125,233,0.25), 0 1px 0 rgba(255,255,255,0.7) inset;
+    transform: scale(1.25);
+    animation: pulseDot 1.6s ease-in-out infinite;
+  }
+  .step-dot.done {
+    background: radial-gradient(circle at 30% 30%, #b7f0a0, #2e8c14 60%, #1d5c0a);
+    border-color: #1d5c0a;
+    box-shadow: 0 0 8px rgba(46,140,20,0.7), 0 1px 0 rgba(255,255,255,0.7) inset;
+  }
+  @keyframes pulseDot {
+    0%, 100% { box-shadow: 0 0 10px #2b7de9, 0 0 0 3px rgba(43,125,233,0.25), 0 1px 0 rgba(255,255,255,0.7) inset; }
+    50%      { box-shadow: 0 0 16px #2b7de9, 0 0 0 6px rgba(43,125,233,0.12), 0 1px 0 rgba(255,255,255,0.7) inset; }
+  }
+
+  /* ===== INFO BOX ===== */
+  .info-box {
+    background: linear-gradient(180deg, #fffbe0 0%, #fff3b8 100%);
+    border: 1px solid #c9b23a; border-radius: 9px;
+    padding: 10px 12px; font-size: 11.5px; color: #6b5a00;
+    margin-bottom: 14px; text-shadow: 0 1px 0 rgba(255,255,255,0.75);
+    line-height: 1.55;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.22), 0 1px 0 rgba(255,255,255,0.6) inset;
+    animation: fadeSlideUp 0.55s ease 0.35s both;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .info-box.gold {
+    background: linear-gradient(180deg, #fff5c8 0%, #ffe082 100%);
+    border-color: #d4a017; color: #5a4500;
+  }
+
+  /* ===== MESSAGES ===== */
+  .msg {
+    font-size: 12px; text-align: center; padding: 9px; margin-bottom: 14px;
+    border-radius: 9px; font-weight: bold; display: none;
+    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .msg.err {
+    display: block; background: linear-gradient(180deg, #ffd8d8, #ffb0b0);
+    border: 1px solid #c33; color: #7a0000;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.65);
+    box-shadow: 0 1px 3px rgba(180,0,0,0.35), 0 1px 0 rgba(255,255,255,0.5) inset;
+  }
+  .msg.ok {
+    display: block; background: linear-gradient(180deg, #d9ffd0, #b0f0a0);
+    border: 1px solid #3a3; color: #0a4a00;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.65);
+    box-shadow: 0 1px 3px rgba(0,120,0,0.35), 0 1px 0 rgba(255,255,255,0.5) inset;
+  }
+
+  .footer-note {
+    text-align: center; font-size: 10.5px; color: #777;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+    margin-top: 14px; letter-spacing: 0.4px;
+    animation: fadeIn 0.6s ease 0.6s both;
+  }
+
+  .flex-row { display: flex; gap: 9px; }
+  .flex-row .btn { flex: 1; }
+  .hidden { display: none !important; }
+
+  .spinner {
+    display: inline-block; width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,0.35); border-top-color: #fff;
+    border-radius: 50%; animation: spin 0.7s linear infinite;
+    vertical-align: middle; margin-right: 7px;
+    box-shadow: 0 0 6px rgba(255,255,255,0.35);
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .reveal { animation: revealRow 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  @keyframes revealRow {
+    from { opacity: 0; transform: translateY(-8px); max-height: 0; padding-top: 0; padding-bottom: 0; }
+    to   { opacity: 1; transform: translateY(0); max-height: 80px; }
+  }
+
+  #tab-gen, #tab-topup, #tab-about { animation: fadeSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+
+  @media (max-width: 400px) {
+    .ios-titlebar h1 { font-size: 16px; }
+    .ios-row label { width: 78px; font-size: 12px; }
+    .btn { font-size: 14px; padding: 12px 0; }
+    .ios-content { padding: 18px 14px 20px; }
+    .credit-value { font-size: 17px; }
+  }
+
+  /* ================================================================
+     CELEBRATION ANIMATION — TOPUP
+     ================================================================ */
+  .celebration-overlay {
+    position: fixed; inset: 0; z-index: 99999;
+    background: radial-gradient(circle at center, rgba(20,10,0,0.75) 0%, rgba(0,0,0,0.96) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    animation: fadeIn 0.5s ease both;
+    pointer-events: none;
+  }
+  .celebration-overlay.closing { animation: fadeOut 1s ease forwards; }
+  @keyframes fadeOut { to { opacity: 0; backdrop-filter: blur(0); } }
+
+  /* Big animated text */
+  .celebration-text {
+    text-align: center; z-index: 20; position: relative;
+    animation: celebrationTextIn 1.1s cubic-bezier(0.34, 1.56, 0.64, 1);
+    padding: 0 20px;
+  }
+  @keyframes celebrationTextIn {
+    0%   { transform: scale(0) rotate(-15deg); opacity: 0; }
+    45%  { transform: scale(1.18) rotate(4deg); opacity: 1; }
+    65%  { transform: scale(0.94) rotate(-2deg); }
+    85%  { transform: scale(1.05) rotate(1deg); }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+  }
+
+  .celebration-label {
+    font-size: 15px; color: #ffd700; letter-spacing: 8px; font-weight: bold;
+    text-shadow: 0 0 20px #ffd700, 0 0 40px #ff8c00;
+    animation: labelPulse 1.4s ease-in-out infinite;
+    margin-bottom: 6px;
+  }
+  @keyframes labelPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.75; transform: scale(1.04); }
+  }
+
+  .celebration-amount {
+    font-size: 58px; font-weight: 900; letter-spacing: -3px; line-height: 1;
+    background: linear-gradient(180deg, #ffffff 0%, #ffe066 25%, #ffb800 55%, #ff6a00 80%, #ff2e00 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 25px rgba(255,180,0,0.9)) drop-shadow(0 0 60px rgba(255,100,0,0.6));
+    animation: amountShine 2s ease-in-out infinite, amountZoom 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    position: relative;
+  }
+  @keyframes amountShine {
+    0%, 100% { filter: drop-shadow(0 0 25px rgba(255,180,0,0.9)) drop-shadow(0 0 60px rgba(255,100,0,0.6)); }
+    50%      { filter: drop-shadow(0 0 40px rgba(255,220,80,1)) drop-shadow(0 0 90px rgba(255,120,0,0.8)); }
+  }
+  @keyframes amountZoom {
+    0%   { transform: scale(0); opacity: 0; }
+    40%  { transform: scale(1.45); opacity: 1; }
+    60%  { transform: scale(0.88); }
+    80%  { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  .celebration-sub {
+    font-size: 11px; color: #fff; letter-spacing: 10px;
+    opacity: 0.85; margin-top: 10px;
+    animation: fadeIn 1s ease 0.6s both;
+    text-shadow: 0 0 10px rgba(255,255,255,0.7);
+  }
+
+  .celebration-badge {
+    display: inline-block;
+    margin-top: 22px;
+    padding: 8px 22px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, #ffe27a 0%, #ffb800 50%, #cc8800 100%);
+    border: 1px solid #7a5200;
+    font-size: 12px; font-weight: 900; color: #4a3000;
+    letter-spacing: 3px;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.7) inset, 0 6px 18px rgba(255,180,0,0.6), 0 0 40px rgba(255,180,0,0.4);
+    animation: badgeBounce 1.6s ease-in-out infinite;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+  }
+  @keyframes badgeBounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50%      { transform: translateY(-4px) scale(1.05); }
+  }
+
+  /* Confetti */
+  .confetti {
+    position: absolute; top: -30px;
+    width: 10px; height: 14px; border-radius: 2px;
+    opacity: 0.95; z-index: 10;
+    animation: confettiFall 4.5s linear infinite;
+    will-change: transform;
+  }
+  @keyframes confettiFall {
+    0%   { transform: translateY(-30px) rotate(0deg) scale(1); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { transform: translateY(105vh) rotate(900deg) scale(0.9); opacity: 0; }
+  }
+
+  /* Coin rain */
+  .coin-rain {
+    position: absolute; top: -60px; font-size: 26px; z-index: 11;
+    animation: coinFall 4s linear infinite;
+    filter: drop-shadow(0 0 10px rgba(255,200,0,0.85));
+    will-change: transform;
+  }
+  @keyframes coinFall {
+    0%   { transform: translateY(-60px) rotate(0deg) scale(0.7); opacity: 0; }
+    12%  { opacity: 1; }
+    100% { transform: translateY(105vh) rotate(720deg) scale(1.1); opacity: 0; }
+  }
+
+  /* Firework */
+  .firework {
+    position: absolute; width: 4px; height: 4px; z-index: 15;
+    pointer-events: none;
+  }
+  .firework-particle {
+    position: absolute; top: 0; left: 0;
+    width: 5px; height: 5px; border-radius: 50%;
+    animation: particleShoot 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    will-change: transform, opacity;
+  }
+  @keyframes particleShoot {
+    0%   { transform: translate(0,0) scale(1.4); opacity: 1; }
+    60%  { opacity: 1; }
+    100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+  }
+  .firework-core {
+    position: absolute; top: -8px; left: -8px;
+    width: 16px; height: 16px; border-radius: 50%;
+    animation: coreFlash 0.6s ease-out forwards;
+  }
+  @keyframes coreFlash {
+    0%   { transform: scale(0); opacity: 1; box-shadow: 0 0 40px 20px currentColor; }
+    100% { transform: scale(3); opacity: 0; box-shadow: 0 0 0 0 currentColor; }
+  }
+
+  /* Sparkle */
+  .sparkle {
+    position: absolute; font-size: 20px; z-index: 12;
+    animation: sparkleFloat 2.2s ease-out forwards;
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+  @keyframes sparkleFloat {
+    0%   { transform: scale(0) rotate(0deg); opacity: 0; }
+    30%  { transform: scale(1.4) rotate(180deg); opacity: 1; }
+    100% { transform: scale(0) rotate(360deg) translateY(-80px); opacity: 0; }
+  }
+
+  /* Expanding rings */
+  .ring {
+    position: absolute; border-radius: 50%;
+    border: 3px solid #ffd700;
+    box-shadow: 0 0 30px #ffd700, 0 0 60px rgba(255,180,0,0.5) inset;
+    animation: ringExpand 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    pointer-events: none; z-index: 8;
+    will-change: transform, opacity;
+  }
+  @keyframes ringExpand {
+    0%   { transform: scale(0); opacity: 1; border-width: 12px; }
+    100% { transform: scale(8); opacity: 0; border-width: 1px; }
+  }
+</style>
 </head>
-<body class="min-h-screen text-slate-100 flex flex-col items-center justify-between p-4 md:p-6 select-none overflow-x-hidden">
+<body>
 
-  <!-- Header -->
-  <header class="w-full max-w-5xl flex items-center justify-between py-2 border-b border-slate-800/80 mb-4">
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
-        <i data-lucide="dumbbell" class="w-6 h-6 text-slate-950 stroke-[2.5]"></i>
+<!-- ============ LOGIN SCREEN ============ -->
+<div class="ios-window" id="loginScreen">
+  <div class="ios-titlebar"><h1>Asep Am prem</h1></div>
+  <div class="ios-content">
+    <div class="app-icon idle">A</div>
+    <div class="subtitle">ALIGHT MOTION PREMIUM GENERATOR</div>
+    <div class="msg err" id="loginMsg"></div>
+    <div class="ios-group">
+      <div class="ios-row">
+        <label>Username</label>
+        <input type="text" id="loginUser" placeholder="masukkan username" autocomplete="off">
       </div>
-      <div>
-        <h1 class="text-xl md:text-2xl font-black tracking-wider uppercase bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-teal-200 to-cyan-400">
-          Barble barb
-        </h1>
-        <p class="text-xs text-slate-400 font-medium tracking-widest uppercase">Pangetang Angkatan Barbel AI Canggih</p>
+      <div class="ios-row">
+        <label>Password</label>
+        <input type="password" id="loginPass" placeholder="masukkan password">
       </div>
     </div>
+    <button class="btn" id="loginBtn">Masuk</button>
+    <div class="footer-note">© Asep.html — 2024</div>
+  </div>
+</div>
 
-    <!-- Status Badge -->
-    <div id="statusBadge" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs font-semibold text-slate-400">
-      <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" id="statusDot"></span>
-      <span id="statusText">Kamera Siyaga</span>
+<!-- ============ MAIN APP ============ -->
+<div class="ios-window hidden" id="appScreen">
+  <div class="ios-titlebar"><h1>Asep Am prem</h1></div>
+
+  <div class="ios-tabs">
+    <div class="ios-tab active" data-tab="gen">Generator</div>
+    <div class="ios-tab" data-tab="topup">Topup</div>
+    <div class="ios-tab" data-tab="about">Tentang</div>
+  </div>
+
+  <!-- Credit Bar -->
+  <div class="credit-bar" id="creditBar">
+    <div class="credit-icon">C</div>
+    <div class="credit-info">
+      <div class="credit-label">CREDIT</div>
+      <div class="credit-value" id="creditDisplay">0</div>
     </div>
-  </header>
+  </div>
 
-  <!-- Main Container -->
-  <main class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-3 gap-6 items-center flex-1">
-    
-    <!-- Video / AI Tracker Screen -->
-    <div class="lg:col-span-2 relative w-full aspect-[4/3] md:aspect-[16/10] bg-slate-950 rounded-3xl overflow-hidden border border-slate-800/80 shadow-2xl shadow-emerald-950/20 flex items-center justify-center">
-      
-      <!-- Video Input (Hidden offscreen) -->
-      <video id="webcam" playsinline muted autoplay class="absolute opacity-0 pointer-events-none -z-50 w-10 h-10"></video>
-      
-      <!-- Canvas Render Output -->
-      <canvas id="outputCanvas" class="w-full h-full object-cover mirror"></canvas>
+  <div class="ios-content">
 
-      <!-- Container Animasi Floating +1 -->
-      <div id="floatingContainer" class="absolute inset-0 pointer-events-none flex items-center justify-center"></div>
-
-      <!-- Live Stage HUD (Up / Down Indicator) -->
-      <div class="absolute top-4 left-4 backdrop-blur-md bg-slate-900/80 border border-slate-700/60 px-4 py-2 rounded-2xl flex items-center gap-3 z-10 shadow-lg">
-        <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Kahanan:</div>
-        <div id="stageIndicator" class="text-sm font-black text-amber-400 tracking-wider">SIYAGA</div>
+    <!-- ====== TAB GENERATOR ====== -->
+    <div id="tab-gen">
+      <div class="steps">
+        <div class="step-dot active" id="dot1"></div>
+        <div class="step-dot" id="dot2"></div>
+        <div class="step-dot" id="dot3"></div>
       </div>
 
-      <!-- Body Detection Status Indicator -->
-      <div id="bodyDetectBadge" class="absolute bottom-4 left-4 backdrop-blur-md bg-slate-900/85 border border-slate-700/60 px-3.5 py-1.5 rounded-xl flex items-center gap-2 text-xs font-bold z-10 shadow-lg text-slate-400">
-        <span id="bodyDetectDot" class="w-2 h-2 rounded-full bg-slate-500"></span>
-        <span id="bodyDetectText">Ngrereh Awak...</span>
+      <div class="info-box">
+        <b>Petunjuk:</b> Masukkan email Alight Motion kamu, kirim magic link, lalu tempel raw magic link dari email untuk verifikasi. Setiap proses membutuhkan <b>1.000 credit</b>.
       </div>
 
-      <!-- Angle HUD -->
-      <div class="absolute top-4 right-4 backdrop-blur-md bg-slate-900/80 border border-slate-700/60 px-4 py-2 rounded-2xl flex items-center gap-2 z-10 shadow-lg">
-        <i data-lucide="activity" class="w-4 h-4 text-teal-400"></i>
-        <span id="angleValue" class="text-sm font-mono font-bold text-teal-300">0°</span>
-      </div>
+      <div class="msg" id="appMsg"></div>
 
-      <!-- Overlay Durung Aktif -->
-      <div id="startPrompt" class="absolute inset-0 bg-slate-950/90 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center z-20">
-        <div class="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-4 text-emerald-400">
-          <i data-lucide="video" class="w-8 h-8"></i>
+      <div class="ios-group">
+        <div class="ios-row">
+          <label>Email</label>
+          <input type="email" id="emailInput" placeholder="email@contoh.com" autocomplete="off">
         </div>
-        <h3 class="text-lg font-bold mb-2">Lugayang Akses Kamera</h3>
-        <p class="text-slate-400 text-sm max-w-sm mb-6">Genahang ragané mangda kacingak tatas ring kamera. AI pacang ngripta balung ragané sacara langsung.</p>
-        <button id="startBtn" class="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-extrabold hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-emerald-500/30 flex items-center gap-2 cursor-pointer">
-          <i data-lucide="play" class="w-5 h-5 fill-slate-950"></i>
-          Ngawit Latihan
-        </button>
+        <div class="ios-row hidden" id="rawLinkRow">
+          <label>Magic Link</label>
+          <input type="text" id="rawLinkInput" placeholder="tempel raw magic link di sini">
+        </div>
+      </div>
+
+      <div id="step1Actions">
+        <button class="btn" id="sendMagicBtn">Kirim Magic Link (1.000 credit)</button>
+      </div>
+
+      <div id="step2Actions" class="hidden">
+        <div class="flex-row">
+          <button class="btn gray" id="backBtn">Kembali</button>
+          <button class="btn green" id="verifyBtn">Verifikasi &amp; Aktifkan</button>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <div style="font-size:11px;font-weight:bold;color:#444;margin-bottom:6px;text-shadow:0 1px 0 #fff;letter-spacing:0.5px;">LOG OUTPUT</div>
+        <div class="ios-log" id="logBox">// Menunggu aksi...</div>
+      </div>
+
+      <div style="margin-top:14px;">
+        <button class="btn red" id="logoutBtn">Keluar</button>
       </div>
     </div>
 
-    <!-- Stats & Controls Panel -->
-    <div class="flex flex-col gap-4">
-      
-      <!-- Counter Card -->
-      <div class="relative overflow-hidden bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-6 shadow-xl text-center">
-        <div class="absolute -top-12 -right-12 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
-        
-        <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Akéh Angkatan Barbel</span>
-        
-        <div class="my-4 flex items-center justify-center">
-          <span id="repCounter" class="text-7xl md:text-8xl font-black tracking-tight text-white transition-all">0</span>
+    <!-- ====== TAB TOPUP ====== -->
+    <div id="tab-topup" class="hidden">
+      <div class="app-icon idle" style="background: radial-gradient(circle at 50% 5%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 45%), linear-gradient(180deg, #ffe27a 0%, #ffb800 45%, #cc8800 52%, #ffd54a 100%); border-color: #7a5200; color:#4a3000; text-shadow: 0 -1px 0 rgba(0,0,0,0.35);">C</div>
+      <div class="subtitle">TOPUP CREDIT</div>
+
+      <div class="info-box gold">
+        <b>Paket Topup:</b><br>
+        • Kode <b>Bestseller</b> → <b>+6.767.676.767</b> credit 🎉
+      </div>
+
+      <div class="msg" id="topupMsg"></div>
+
+      <div class="ios-group">
+        <div class="ios-row">
+          <label>Kode</label>
+          <input type="text" id="topupCode" placeholder="masukkan kode topup" autocomplete="off">
         </div>
-
-        <!-- Progress Gauge Bar -->
-        <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden mb-2">
-          <div id="progressBar" class="bg-gradient-to-r from-teal-400 to-emerald-400 h-2.5 rounded-full transition-all duration-150" style="width: 0%"></div>
-        </div>
-        <p id="feedbackText" class="text-xs font-semibold text-slate-400 mt-2">Ngadeg ring arep kamera & lilitang sikut</p>
       </div>
 
-      <!-- Controls -->
-      <div class="bg-slate-900/60 border border-slate-800/80 backdrop-blur-md rounded-2xl p-4 flex gap-3">
-        <button id="resetBtn" class="flex-1 py-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 font-bold transition flex items-center justify-center gap-2 border border-slate-700/50 active:scale-95 cursor-pointer">
-          <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-          Waliang (Reset)
-        </button>
-        <button id="toggleCameraBtn" class="px-4 py-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 font-bold transition border border-slate-700/50 active:scale-95 cursor-pointer">
-          <i data-lucide="camera" id="toggleCamIcon" class="w-4 h-4"></i>
-        </button>
-      </div>
-
-      <!-- Tips Box -->
-      <div class="p-4 rounded-2xl bg-emerald-950/20 border border-emerald-800/30 text-xs text-emerald-300/80 flex gap-3 items-start">
-        <i data-lucide="info" class="w-5 h-5 shrink-0 text-emerald-400"></i>
-        <p>Pituduh: Garis gadang punika balung ragané. Rikala ngangkat barbel, kakalih lengen pacang masunar kuning tur ngetang repetisi sacara otomatis.</p>
-      </div>
-
+      <button class="btn gold" id="topupBtn">Topup Sekarang</button>
     </div>
 
-  </main>
+    <!-- ====== TAB ABOUT ====== -->
+    <div id="tab-about" class="hidden">
+      <div class="app-icon idle">A</div>
+      <div class="subtitle">ASEP AM PREM v1.1</div>
+      <div class="info-box">
+        <b>Nama Scrape:</b> Alight Motion Premium Generator<br>
+        <b>Admin Utama:</b> Asep.html<br>
+        <b>Pencipta:</b> Asep<br><br>
+        Tools ini digunakan untuk mengirim magic link, memproses verifikasi akun Alight Motion, dan meneruskan idToken ke endpoint premium.
+      </div>
+      <div class="ios-group">
+        <div class="ios-row">
+          <label>API</label>
+          <input type="text" value="anita-studio.netlify.app" readonly>
+        </div>
+        <div class="ios-row">
+          <label>Endpoint</label>
+          <input type="text" value="/.netlify/functions/amprem" readonly>
+        </div>
+        <div class="ios-row">
+          <label>Harga</label>
+          <input type="text" value="1.000 credit / generate" readonly>
+        </div>
+      </div>
+      <button class="btn gray" id="backToGen">Kembali ke Generator</button>
+    </div>
 
-  <footer class="mt-4 text-xs text-slate-500 font-medium">
-    Barble barb &bull; Computer Vision Powered Rep Counter
-  </footer>
+  </div>
+</div>
 
-  <script>
-    lucide.createIcons();
+<script>
+/* ============================================================
+   ASEP AM PREM — Script
+   Credit: Asep.html
+   ============================================================ */
 
-    const videoElement = document.getElementById('webcam');
-    const canvasElement = document.getElementById('outputCanvas');
-    const canvasCtx = canvasElement.getContext('2d', { alpha: false });
-    
-    const repCounter = document.getElementById('repCounter');
-    const stageIndicator = document.getElementById('stageIndicator');
-    const angleValue = document.getElementById('angleValue');
-    const progressBar = document.getElementById('progressBar');
-    const feedbackText = document.getElementById('feedbackText');
-    const floatingContainer = document.getElementById('floatingContainer');
+const API_URL = 'https://anita-studio.netlify.app/.netlify/functions/amprem';
+const VALID_USER = 'rudi';
+const VALID_PASS = '123';
 
-    const startBtn = document.getElementById('startBtn');
-    const startPrompt = document.getElementById('startPrompt');
-    const resetBtn = document.getElementById('resetBtn');
-    const toggleCameraBtn = document.getElementById('toggleCameraBtn');
-    const statusBadge = document.getElementById('statusBadge');
-    const statusText = document.getElementById('statusText');
-    const statusDot = document.getElementById('statusDot');
+const TOPUP_CODES = {
+  'bestseller': 6767676767
+};
+const COST_PER_GENERATE = 1000;
 
-    const bodyDetectBadge = document.getElementById('bodyDetectBadge');
-    const bodyDetectDot = document.getElementById('bodyDetectDot');
-    const bodyDetectText = document.getElementById('bodyDetectText');
+/* ---------- ELEMEN ---------- */
+const loginScreen = document.getElementById('loginScreen');
+const appScreen   = document.getElementById('appScreen');
+const loginUser   = document.getElementById('loginUser');
+const loginPass   = document.getElementById('loginPass');
+const loginBtn    = document.getElementById('loginBtn');
+const loginMsg    = document.getElementById('loginMsg');
 
-    let count = 0;
-    let stage = "down"; 
-    let camera = null;
-    let isTracking = false;
-    let isProcessing = false; // Mencegah lag / frame-queue backlog
+const emailInput     = document.getElementById('emailInput');
+const rawLinkRow     = document.getElementById('rawLinkRow');
+const rawLinkInput   = document.getElementById('rawLinkInput');
+const sendMagicBtn   = document.getElementById('sendMagicBtn');
+const step1Actions   = document.getElementById('step1Actions');
+const step2Actions   = document.getElementById('step2Actions');
+const verifyBtn      = document.getElementById('verifyBtn');
+const backBtn        = document.getElementById('backBtn');
+const logoutBtn      = document.getElementById('logoutBtn');
+const logBox         = document.getElementById('logBox');
+const appMsg         = document.getElementById('appMsg');
 
-    // Web Audio Synthesizer Beep
-    function playBeep() {
-      try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(783.99, audioCtx.currentTime + 0.12);
-        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.2);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.2);
-      } catch (e) {
-        console.log("Akses audio kaperluang");
-      }
-    }
+const topupCode      = document.getElementById('topupCode');
+const topupBtn       = document.getElementById('topupBtn');
+const topupMsg       = document.getElementById('topupMsg');
 
-    // Hitung Sudut 3 Titik Sendi
-    function calculateAngle(a, b, c) {
-      const radians = Math.atan2(c.y - b.y, c.x - b.x) - Math.atan2(a.y - b.y, a.x - b.x);
-      let angle = Math.abs((radians * 180.0) / Math.PI);
-      if (angle > 180.0) {
-        angle = 360.0 - angle;
-      }
-      return angle;
-    }
+const creditDisplay  = document.getElementById('creditDisplay');
+const creditBar      = document.getElementById('creditBar');
 
-    // Efek Pop Animasi +1
-    function triggerRepAnimation() {
-      repCounter.classList.remove('rep-animate');
-      void repCounter.offsetWidth;
-      repCounter.classList.add('rep-animate');
+const dot1 = document.getElementById('dot1');
+const dot2 = document.getElementById('dot2');
+const dot3 = document.getElementById('dot3');
 
-      const plusOne = document.createElement('div');
-      plusOne.className = 'floating-plus text-5xl md:text-7xl';
-      plusOne.innerText = '+1';
-      floatingContainer.appendChild(plusOne);
+/* ============================================================
+   CREDIT SYSTEM
+   ============================================================ */
+let credits = 0;
 
-      setTimeout(() => {
-        plusOne.remove();
-      }, 800);
-    }
+function loadCredits() {
+  const stored = localStorage.getItem('asep_credits');
+  credits = stored !== null ? parseInt(stored, 10) : 0;
+  if (isNaN(credits)) credits = 0;
+  creditDisplay.textContent = formatNumber(credits);
+}
 
-    // Fungsi nggambar garis balung lengen sané nyunar kuning (Glowing Yellow Arm)
-    function drawActiveArmBone(p1, p2, p3, width, height) {
-      canvasCtx.save();
-      canvasCtx.strokeStyle = '#facc15'; // Kuning galang
-      canvasCtx.lineWidth = 6;
-      canvasCtx.lineCap = 'round';
-      canvasCtx.shadowColor = '#fde047';
-      canvasCtx.shadowBlur = 12;
+function saveCredits() {
+  localStorage.setItem('asep_credits', String(credits));
+}
 
-      // Garis Bahu -> Sikut -> Pagelangan
-      canvasCtx.beginPath();
-      canvasCtx.moveTo(p1.x * width, p1.y * height);
-      canvasCtx.lineTo(p2.x * width, p2.y * height);
-      canvasCtx.lineTo(p3.x * width, p3.y * height);
-      canvasCtx.stroke();
+function formatNumber(n) {
+  return n.toLocaleString('id-ID');
+}
 
-      // Bunderan ring sendi
-      [p1, p2, p3].forEach(p => {
-        canvasCtx.beginPath();
-        canvasCtx.arc(p.x * width, p.y * height, 6, 0, 2 * Math.PI);
-        canvasCtx.fillStyle = '#ffffff';
-        canvasCtx.fill();
-        canvasCtx.strokeStyle = '#eab308';
-        canvasCtx.lineWidth = 2.5;
-        canvasCtx.stroke();
-      });
+function animateCredit(from, to, duration = 1400) {
+  const start = performance.now();
+  function step(now) {
+    const t = Math.min((now - start) / duration, 1);
+    // ease out cubic
+    const eased = 1 - Math.pow(1 - t, 3);
+    const val = Math.floor(from + (to - from) * eased);
+    creditDisplay.textContent = formatNumber(val);
+    if (t < 1) requestAnimationFrame(step);
+    else creditDisplay.textContent = formatNumber(to);
+  }
+  requestAnimationFrame(step);
+}
 
-      canvasCtx.restore();
-    }
+function updateCredits(delta) {
+  const before = credits;
+  credits += delta;
+  if (credits < 0) credits = 0;
+  saveCredits();
+  animateCredit(before, credits, 1000);
+  creditDisplay.classList.remove('bump');
+  void creditDisplay.offsetWidth;
+  creditDisplay.classList.add('bump');
 
-    // Callback ritatkala MediaPipe Pose ngasilang deteksi
-    function onResults(results) {
-      if (!canvasElement.width && videoElement.videoWidth) {
-        canvasElement.width = videoElement.videoWidth;
-        canvasElement.height = videoElement.videoHeight;
-      }
+  // floating delta
+  const float = document.createElement('div');
+  float.className = 'credit-float ' + (delta >= 0 ? 'plus' : 'minus');
+  float.textContent = (delta >= 0 ? '+' : '') + formatNumber(delta);
+  creditBar.appendChild(float);
+  setTimeout(() => float.remove(), 1700);
+}
 
-      canvasCtx.save();
-      
-      // Gambar video feed ka canvas
-      if (results.image) {
-        canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
-      }
+/* ============================================================
+   CELEBRATION ANIMATION
+   ============================================================ */
+function showTopupCelebration(amount) {
+  const overlay = document.createElement('div');
+  overlay.className = 'celebration-overlay';
 
-      if (results.poseLandmarks && results.poseLandmarks.length > 0) {
-        bodyDetectDot.className = "w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping";
-        bodyDetectText.innerText = "Awak Katemu";
-        bodyDetectBadge.className = "absolute bottom-4 left-4 backdrop-blur-md bg-emerald-950/80 border border-emerald-500/50 px-3.5 py-1.5 rounded-xl flex items-center gap-2 text-xs font-bold z-10 shadow-lg text-emerald-300";
+  // Text block
+  const textBlock = document.createElement('div');
+  textBlock.className = 'celebration-text';
+  textBlock.innerHTML = `
+    <div class="celebration-label">TOPUP BERHASIL</div>
+    <div class="celebration-amount">+${formatNumber(amount)}</div>
+    <div class="celebration-sub">CREDIT DITAMBAHKAN</div>
+    <div class="celebration-badge">★ BESTSELLER ★</div>
+  `;
+  overlay.appendChild(textBlock);
 
-        const connections = window.POSE_CONNECTIONS || (window.Pose && window.Pose.POSE_CONNECTIONS);
+  // Confetti burst — 180 pieces
+  const confettiColors = ['#ff3b3b', '#ffb800', '#ffe066', '#4bff6b', '#3b9dff', '#b53bff', '#ff6ec7', '#00e5ff', '#ff8c00', '#ffd700'];
+  for (let i = 0; i < 180; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.background = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+    c.style.animationDelay = (Math.random() * 3.5) + 's';
+    c.style.animationDuration = (3 + Math.random() * 3.5) + 's';
+    c.style.width = (6 + Math.random() * 10) + 'px';
+    c.style.height = (9 + Math.random() * 14) + 'px';
+    c.style.borderRadius = Math.random() > 0.7 ? '50%' : '2px';
+    if (Math.random() > 0.6) c.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+    overlay.appendChild(c);
+  }
 
-        // 1. Gambar rangka tulang umum (Garis Gadang / Hijau Neon)
-        if (connections && window.drawConnectors) {
-          drawConnectors(canvasCtx, results.poseLandmarks, connections, {
-            color: 'rgba(52, 211, 153, 0.65)',
-            lineWidth: 2.5
-          });
-        }
+  // Coin rain — 40 coins
+  const coinEmojis = ['🪙', '💰', '💎', '⭐', '🏆'];
+  for (let i = 0; i < 40; i++) {
+    const coin = document.createElement('div');
+    coin.className = 'coin-rain';
+    coin.textContent = coinEmojis[Math.floor(Math.random() * coinEmojis.length)];
+    coin.style.left = Math.random() * 100 + '%';
+    coin.style.animationDelay = (Math.random() * 3.5) + 's';
+    coin.style.animationDuration = (3 + Math.random() * 3) + 's';
+    coin.style.fontSize = (16 + Math.random() * 22) + 'px';
+    overlay.appendChild(coin);
+  }
 
-        // 2. Gambar titik sendi
-        if (window.drawLandmarks) {
-          drawLandmarks(canvasCtx, results.poseLandmarks, {
-            color: '#06b6d4',
-            fillColor: '#0f172a',
-            lineWidth: 1.5,
-            radius: 3
-          });
-        }
+  // Fireworks — 14 bursts spread over 5 seconds
+  for (let i = 0; i < 14; i++) {
+    setTimeout(() => {
+      if (!overlay.parentNode) return;
+      createFirework(overlay);
+    }, 250 + i * 380);
+  }
 
-        const landmarks = results.poseLandmarks;
-        const w = canvasElement.width;
-        const h = canvasElement.height;
+  // Expanding rings from center
+  for (let i = 0; i < 5; i++) {
+    setTimeout(() => {
+      if (!overlay.parentNode) return;
+      const ring = document.createElement('div');
+      ring.className = 'ring';
+      const size = 80;
+      ring.style.width = size + 'px';
+      ring.style.height = size + 'px';
+      ring.style.left = '50%';
+      ring.style.top = '50%';
+      ring.style.marginLeft = (-size / 2) + 'px';
+      ring.style.marginTop = (-size / 2) + 'px';
+      ring.style.borderColor = i % 2 === 0 ? '#ffd700' : '#ff6a00';
+      overlay.appendChild(ring);
+      setTimeout(() => ring.remove(), 2200);
+    }, i * 300);
+  }
 
-        // Koordinat Lengan Kanan (12: Bahu, 14: Siku, 16: Pergelangan)
-        const rightShoulder = landmarks[12];
-        const rightElbow = landmarks[14];
-        const rightWrist = landmarks[16];
+  // Sparkles around the amount text — 30 sparkles
+  for (let i = 0; i < 30; i++) {
+    setTimeout(() => {
+      if (!overlay.parentNode) return;
+      const s = document.createElement('div');
+      s.className = 'sparkle';
+      const emo = ['✨', '⭐', '🌟', '💫'];
+      s.textContent = emo[Math.floor(Math.random() * emo.length)];
+      s.style.left = (20 + Math.random() * 60) + '%';
+      s.style.top = (30 + Math.random() * 40) + '%';
+      s.style.fontSize = (14 + Math.random() * 20) + 'px';
+      overlay.appendChild(s);
+      setTimeout(() => s.remove(), 2300);
+    }, 400 + i * 100);
+  }
 
-        // Koordinat Lengan Kiri (11: Bahu, 13: Siku, 15: Pergelangan)
-        const leftShoulder = landmarks[11];
-        const leftElbow = landmarks[13];
-        const leftWrist = landmarks[15];
+  document.body.appendChild(overlay);
 
-        const rightVis = ((rightShoulder?.visibility || 0) + (rightElbow?.visibility || 0) + (rightWrist?.visibility || 0)) / 3;
-        const leftVis = ((leftShoulder?.visibility || 0) + (leftElbow?.visibility || 0) + (leftWrist?.visibility || 0)) / 3;
+  // Closing after full sequence (7.5 seconds total — "panjang dan meriah")
+  setTimeout(() => {
+    overlay.classList.add('closing');
+    setTimeout(() => overlay.remove(), 1000);
+  }, 7500);
+}
 
-        const activeAngles = [];
+function createFirework(overlay) {
+  const x = 10 + Math.random() * 80;
+  const y = 15 + Math.random() * 60;
+  const fw = document.createElement('div');
+  fw.className = 'firework';
+  fw.style.left = x + '%';
+  fw.style.top = y + '%';
 
-        // Deteksi Tangan Tengawan (Kanan) - Gambar Kuning yening aktif
-        if (rightVis > 0.45) {
-          drawActiveArmBone(rightShoulder, rightElbow, rightWrist, w, h);
-          activeAngles.push(calculateAngle(rightShoulder, rightElbow, rightWrist));
-        }
+  const colors = ['#ff3b3b', '#ffb800', '#ffe066', '#4bff6b', '#3b9dff', '#b53bff', '#ff6ec7', '#00e5ff'];
+  const color = colors[Math.floor(Math.random() * colors.length)];
 
-        // Deteksi Tangan Kiwa (Kiri) - Gambar Kuning yening aktif
-        if (leftVis > 0.45) {
-          drawActiveArmBone(leftShoulder, leftElbow, leftWrist, w, h);
-          activeAngles.push(calculateAngle(leftShoulder, leftElbow, leftWrist));
-        }
+  // core flash
+  const core = document.createElement('div');
+  core.className = 'firework-core';
+  core.style.color = color;
+  core.style.background = color;
+  fw.appendChild(core);
 
-        // Yening wenten tangan sané aktif (kiri, kanan, utawi kakalihne)
-        if (activeAngles.length > 0) {
-          // Itung rata-rata sudut kakalih tangan mangda presisi
-          const currentAngle = Math.round(activeAngles.reduce((a, b) => a + b, 0) / activeAngles.length);
-          angleValue.innerText = `${currentAngle}°`;
+  const particleCount = 26 + Math.floor(Math.random() * 14);
+  for (let i = 0; i < particleCount; i++) {
+    const p = document.createElement('div');
+    p.className = 'firework-particle';
+    const angle = (Math.PI * 2 * i) / particleCount + (Math.random() * 0.2 - 0.1);
+    const distance = 60 + Math.random() * 110;
+    const tx = Math.cos(angle) * distance;
+    const ty = Math.sin(angle) * distance;
+    p.style.setProperty('--tx', tx + 'px');
+    p.style.setProperty('--ty', ty + 'px');
+    p.style.background = color;
+    p.style.boxShadow = '0 0 10px ' + color + ', 0 0 20px ' + color;
+    p.style.animationDelay = (Math.random() * 0.12) + 's';
+    fw.appendChild(p);
+  }
 
-          // Hitung persentase gauge (160° = 0%, 35° = 100%)
-          const progress = Math.min(Math.max((160 - currentAngle) / (160 - 35) * 100, 0), 100);
-          progressBar.style.width = `${progress}%`;
+  overlay.appendChild(fw);
+  setTimeout(() => fw.remove(), 2200);
+}
 
-          // State Machine Repetisi Barbel
-          if (currentAngle > 145) {
-            stage = "down";
-            stageIndicator.innerText = "LURUS (TUWUN)";
-            stageIndicator.className = "text-sm font-black text-cyan-400 tracking-wider";
-            feedbackText.innerText = "Angkat abotan nuju duwur!";
-          }
-          
-          if (currentAngle < 50 && stage === "down") {
-            stage = "up";
-            count += 1;
-            repCounter.innerText = count;
-            stageIndicator.innerText = "KAANGKAT (MENEK)";
-            stageIndicator.className = "text-sm font-black text-emerald-400 tracking-wider";
-            feedbackText.innerText = "Becik pisan! Tuwunang alon-alon.";
-            
-            playBeep();
-            triggerRepAnimation();
-          }
-        }
-      } else {
-        bodyDetectDot.className = "w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse";
-        bodyDetectText.innerText = "Ngrereh Awak...";
-        bodyDetectBadge.className = "absolute bottom-4 left-4 backdrop-blur-md bg-slate-900/85 border border-slate-700/60 px-3.5 py-1.5 rounded-xl flex items-center gap-2 text-xs font-bold z-10 shadow-lg text-slate-400";
-      }
+/* ============================================================
+   UTIL
+   ============================================================ */
+function log(msg) {
+  const time = new Date().toLocaleTimeString('id-ID');
+  const line = document.createElement('div');
+  line.className = 'log-line';
+  line.textContent = `[${time}] ${msg}`;
+  const txt = logBox.textContent.trim();
+  if (txt === '// Menunggu aksi...' || txt === '// Memulai proses...') logBox.textContent = '';
+  logBox.appendChild(line);
+  logBox.scrollTo({ top: logBox.scrollHeight, behavior: 'smooth' });
+}
+function resetLog() { logBox.textContent = '// Memulai proses...'; }
+function showMsg(el, text, type) {
+  if (!text) { el.className = 'msg'; el.textContent = ''; return; }
+  el.textContent = text;
+  el.className = 'msg ' + (type === 'ok' ? 'ok' : 'err');
+}
+function setLoading(btn, loading, label) {
+  if (loading) {
+    btn.disabled = true;
+    btn.dataset.orig = btn.innerHTML;
+    btn.innerHTML = `<span class="spinner"></span>${label || 'Memproses...'}`;
+  } else {
+    btn.disabled = false;
+    if (btn.dataset.orig) btn.innerHTML = btn.dataset.orig;
+  }
+}
+function setStep(n) {
+  [dot1, dot2, dot3].forEach((d, i) => {
+    d.classList.remove('active', 'done');
+    if (i + 1 < n) d.classList.add('done');
+    if (i + 1 === n) d.classList.add('active');
+  });
+}
 
-      canvasCtx.restore();
-    }
+/* ---------- API ---------- */
+async function apiPost(action, data) {
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action, ...data })
+  });
+  const json = await res.json();
+  return { status: res.status, data: json };
+}
 
-    // Inisialisasi MediaPipe Pose (Model Lite = 0, sanget ngirangin lag)
-    const pose = new Pose({
-      locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
+/* ---------- SCREEN SWITCH ---------- */
+function switchScreen(from, to) {
+  from.classList.add('leaving');
+  setTimeout(() => {
+    from.classList.add('hidden');
+    from.classList.remove('leaving');
+    to.classList.remove('hidden');
+    to.classList.remove('screen-enter');
+    void to.offsetWidth;
+    to.classList.add('screen-enter');
+  }, 420);
+}
+
+/* ---------- LOGIN ---------- */
+loginBtn.addEventListener('click', doLogin);
+loginPass.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+loginUser.addEventListener('keydown', e => { if (e.key === 'Enter') loginPass.focus(); });
+
+function doLogin() {
+  const u = loginUser.value.trim();
+  const p = loginPass.value;
+  if (!u || !p) { showMsg(loginMsg, 'Username dan password wajib diisi!', 'err'); return; }
+
+  if (u === VALID_USER && p === VALID_PASS) {
+    showMsg(loginMsg, '', '');
+    sessionStorage.setItem('asep_logged', '1');
+    switchScreen(loginScreen, appScreen);
+    setTimeout(() => log('Login berhasil sebagai ' + u + ' | credit: ' + formatNumber(credits)), 500);
+  } else {
+    showMsg(loginMsg, 'Username atau password salah!', 'err');
+    loginScreen.animate(
+      [{ transform:'translateX(0)' }, { transform:'translateX(-8px)' },
+       { transform:'translateX(8px)' }, { transform:'translateX(-5px)' },
+       { transform:'translateX(5px)' }, { transform:'translateX(0)' }],
+      { duration: 380, easing: 'ease-in-out' }
+    );
+  }
+}
+
+/* ---------- LOGOUT ---------- */
+logoutBtn.addEventListener('click', () => {
+  sessionStorage.removeItem('asep_logged');
+  switchScreen(appScreen, loginScreen);
+  setTimeout(() => {
+    loginUser.value = '';
+    loginPass.value = '';
+    showMsg(loginMsg, '', '');
+    emailInput.value = '';
+    rawLinkInput.value = '';
+    rawLinkRow.classList.add('hidden');
+    step1Actions.classList.remove('hidden');
+    step2Actions.classList.add('hidden');
+    setStep(1);
+    logBox.textContent = '// Menunggu aksi...';
+    loginUser.focus();
+  }, 450);
+});
+
+/* ---------- TAB SWITCHING ---------- */
+document.querySelectorAll('.ios-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    if (tab.classList.contains('active')) return;
+    document.querySelectorAll('.ios-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const target = tab.dataset.tab;
+    const tabs = { gen: document.getElementById('tab-gen'), topup: document.getElementById('tab-topup'), about: document.getElementById('tab-about') };
+    Object.entries(tabs).forEach(([k, el]) => {
+      if (k === target) {
+        el.classList.remove('hidden');
+        el.style.animation = 'none'; void el.offsetWidth;
+        el.style.animation = 'fadeSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+      } else el.classList.add('hidden');
     });
+  });
+});
+document.getElementById('backToGen').addEventListener('click', () => {
+  document.querySelector('.ios-tab[data-tab="gen"]').click();
+});
 
-    pose.setOptions({
-      modelComplexity: 0, // Lite (paling enteng, anti macet/lag)
-      smoothLandmarks: true,
-      enableSegmentation: false,
-      minDetectionConfidence: 0.5,
-      minTrackingConfidence: 0.5
-    });
+/* ---------- TOPUP ---------- */
+topupBtn.addEventListener('click', () => {
+  const code = topupCode.value.trim().toLowerCase();
+  showMsg(topupMsg, '', '');
 
-    pose.onResults(onResults);
+  if (!code) { showMsg(topupMsg, 'Masukkan kode topup terlebih dahulu!', 'err'); return; }
 
-    // Ngawit Kamera
-    async function startCamera() {
-      try {
-        startPrompt.classList.add('hidden');
-        statusBadge.className = "flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-950/60 border border-emerald-800 text-xs font-semibold text-emerald-400";
-        statusDot.className = "w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping";
-        statusText.innerText = "Pelacakan Mamargi";
+  const amount = TOPUP_CODES[code];
+  if (!amount) {
+    showMsg(topupMsg, 'Kode topup tidak valid!', 'err');
+    topupBtn.animate(
+      [{ transform:'translateX(0)' }, { transform:'translateX(-6px)' },
+       { transform:'translateX(6px)' }, { transform:'translateX(-4px)' },
+       { transform:'translateX(4px)' }, { transform:'translateX(0)' }],
+      { duration: 380, easing: 'ease-in-out' }
+    );
+    return;
+  }
 
-        if (!camera) {
-          camera = new Camera(videoElement, {
-            onFrame: async () => {
-              // Frame drop check mangda nenten lag
-              if (!isProcessing && videoElement.readyState >= 2) {
-                isProcessing = true;
-                await pose.send({ image: videoElement });
-                isProcessing = false;
-              }
-            },
-            width: 854,
-            height: 480
-          });
-        }
+  // Valid — celebrate!
+  setLoading(topupBtn, true, 'Memproses...');
+  showMsg(topupMsg, 'Kode valid! Menambahkan ' + formatNumber(amount) + ' credit...', 'ok');
+  topupCode.value = '';
 
-        await camera.start();
-        canvasElement.width = 854;
-        canvasElement.height = 480;
-        isTracking = true;
-      } catch (err) {
-        console.error("Iwang ngungkab kamera:", err);
-        alert("Iwang ngungkab kamera: " + err.message + "\n\nCatetan: Pastikayang izin kamera sampun kalugayang ring browser.");
-        startPrompt.classList.remove('hidden');
-      }
-    }
+  setTimeout(() => {
+    updateCredits(amount);
+    showTopupCelebration(amount);
+    showMsg(topupMsg, 'Topup berhasil! +' + formatNumber(amount) + ' credit.', 'ok');
+    setLoading(topupBtn, false);
+  }, 550);
+});
 
-    startBtn.addEventListener('click', startCamera);
+/* ---------- STEP 1: KIRIM MAGIC LINK ---------- */
+sendMagicBtn.addEventListener('click', async () => {
+  const email = emailInput.value.trim();
+  showMsg(appMsg, '', '');
 
-    // Waliang Itungan (Reset)
-    resetBtn.addEventListener('click', () => {
-      count = 0;
-      repCounter.innerText = 0;
-      progressBar.style.width = "0%";
-      feedbackText.innerText = "Wilangan sampun kawaliang. Siyaga ngangkat malih!";
-    });
+  if (!email || !email.includes('@')) { showMsg(appMsg, 'Masukkan email yang valid!', 'err'); return; }
+  if (credits < COST_PER_GENERATE) {
+    showMsg(appMsg, 'Credit tidak cukup! Butuh ' + formatNumber(COST_PER_GENERATE) + ' credit. Topup dulu di tab Topup.', 'err');
+    return;
+  }
 
-    // Pilihan Kamera On/Off
-    toggleCameraBtn.addEventListener('click', async () => {
-      if (isTracking && camera) {
-        await camera.stop();
-        isTracking = false;
-        startPrompt.classList.remove('hidden');
-        statusBadge.className = "flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs font-semibold text-slate-400";
-        statusDot.className = "w-2.5 h-2.5 rounded-full bg-amber-500";
-        statusText.innerText = "Kamera Kaandeg";
-      } else {
-        startCamera();
-      }
-    });
-  </script>
+  resetLog();
+  setLoading(sendMagicBtn, true, 'Mengirim...');
+  log('Mengirim magic link ke: ' + email);
+
+  try {
+    const { status, data } = await apiPost('send-magiclink', { email });
+    log('Status HTTP: ' + status);
+    log('Response: ' + JSON.stringify(data));
+
+    if (!data.success) throw new Error(data.message || 'Gagal mengirim magic link');
+
+    // Potong credit setelah sukses kirim
+    updateCredits(-COST_PER_GENERATE);
+    log('Credit terpotong: -' + formatNumber(COST_PER_GENERATE) + ' (sisa: ' + formatNumber(credits) + ')');
+
+    showMsg(appMsg, 'Magic link berhasil dikirim! Cek email kamu.', 'ok');
+    setStep(2);
+
+    rawLinkRow.classList.remove('hidden');
+    rawLinkRow.classList.add('reveal');
+    step1Actions.classList.add('hidden');
+    step2Actions.classList.remove('hidden');
+    step2Actions.style.animation = 'fadeSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+    log('>> Silakan cek email, lalu tempel RAW magic link di kolom yang tersedia.');
+  } catch (err) {
+    log('ERROR: ' + err.message);
+    showMsg(appMsg, err.message, 'err');
+  } finally {
+    setLoading(sendMagicBtn, false);
+  }
+});
+
+/* ---------- STEP 2: VERIFIKASI + APPLY PREMIUM ---------- */
+verifyBtn.addEventListener('click', async () => {
+  const email = emailInput.value.trim();
+  const rawLink = rawLinkInput.value.trim();
+  showMsg(appMsg, '', '');
+
+  if (!rawLink) { showMsg(appMsg, 'Tempel raw magic link terlebih dahulu!', 'err'); return; }
+
+  setLoading(verifyBtn, true, 'Memverifikasi...');
+  log('--- Memverifikasi akun ---');
+  log('Email: ' + email);
+
+  try {
+    const { status: vStatus, data: verification } = await apiPost('verify-account', { email, rawLink });
+    log('Status verify: ' + vStatus);
+    log('Response verify: ' + JSON.stringify(verification));
+
+    if (!verification.success) throw new Error(verification.message || 'Verifikasi gagal');
+
+    const idToken = verification.idToken || (verification.profile && verification.profile.idToken);
+    if (!idToken) throw new Error('idToken tidak ditemukan pada response verifikasi');
+
+    log('idToken ditemukan ✔');
+    setStep(3);
+    log('--- Menerapkan premium ---');
+
+    const { status: pStatus, data: premium } = await apiPost('apply-premium', { email, idToken });
+    log('Status premium: ' + pStatus);
+    log('Response premium: ' + JSON.stringify(premium));
+
+    if (!premium.success) throw new Error(premium.message || 'Proses premium gagal');
+
+    showMsg(appMsg, 'Premium berhasil diaktifkan! 🎉', 'ok');
+    log('=================================');
+    log('SUKSES! Premium sudah aktif untuk ' + email);
+    log('=================================');
+    log(JSON.stringify(premium, null, 2));
+  } catch (err) {
+    log('ERROR: ' + err.message);
+    showMsg(appMsg, err.message, 'err');
+    setStep(2);
+  } finally {
+    setLoading(verifyBtn, false);
+  }
+});
+
+/* ---------- BACK ---------- */
+backBtn.addEventListener('click', () => {
+  rawLinkRow.classList.add('hidden');
+  rawLinkInput.value = '';
+  step1Actions.classList.remove('hidden');
+  step2Actions.classList.add('hidden');
+  showMsg(appMsg, '', '');
+  setStep(1);
+});
+
+/* ---------- INIT ---------- */
+window.addEventListener('load', () => {
+  loadCredits();
+  if (sessionStorage.getItem('asep_logged') === '1') {
+    loginScreen.classList.add('hidden');
+    appScreen.classList.remove('hidden');
+    appScreen.classList.add('screen-enter');
+    log('Credit tersedia: ' + formatNumber(credits));
+  } else {
+    setTimeout(() => loginUser.focus(), 700);
+  }
+});
+</script>
 </body>
 </html>
